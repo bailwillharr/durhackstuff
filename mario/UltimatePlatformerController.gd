@@ -182,6 +182,7 @@ var downTap
 var twirlTap
 
 func _ready():
+	
 	wasMovingR = true
 	anim = PlayerSprite
 	col = PlayerCollider
