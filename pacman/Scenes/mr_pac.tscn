@@ -1,15 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://yjyx28kgqqnp"]
+[gd_scene load_steps=7 format=3 uid="uid://yjyx28kgqqnp"]
 
+[ext_resource type="Script" uid="uid://ce6b3ndg61ul" path="res://pacman/Scenes/pacman_control.gd" id="1_3mbeg"]
+[ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://pacman/Assets/Pacman/Pacman_01.png" id="2_6ukjk"]
 [ext_resource type="Texture2D" uid="uid://h71ud3s8c8n3" path="res://pacman/Assets/Pacman/Pacman_02.png" id="2_yhdkw"]
+[ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://pacman/Assets/Pacman/Pacman_03.png" id="4_4iqxi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3mbeg"]
 radius = 7.0
 
-[node name="mrPac" type="CharacterBody2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_jnw4u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6ukjk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yhdkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4iqxi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yhdkw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("2_yhdkw")
+[node name="mrPac" type="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3mbeg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jnw4u")
+frame_progress = 0.10501553
+speed_scale = 2.0
+script = ExtResource("1_3mbeg")
