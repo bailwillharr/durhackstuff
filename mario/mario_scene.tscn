@@ -1,29 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://main_menu/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
 [ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://pacman/Assets/Pacman/Pacman_Death_05.png" id="4_krxw5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jmjmq"]
-atlas = ExtResource("1_jmjmq")
-region = Rect2(174, 52, 29, 34)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5g4m"]
 atlas = ExtResource("1_jmjmq")
 region = Rect2(203, 52, 29, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m8c8l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_krxw5"]
 atlas = ExtResource("1_jmjmq")
-region = Rect2(116, 52, 29, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n2ioy"]
-atlas = ExtResource("1_jmjmq")
-region = Rect2(87, 52, 29, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ow0ht"]
-atlas = ExtResource("1_jmjmq")
-region = Rect2(145, 52, 29, 34)
+region = Rect2(359, 52, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tqwqi"]
 atlas = ExtResource("1_jmjmq")
@@ -41,35 +29,18 @@ region = Rect2(232, 52, 29, 34)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jmjmq")
-}],
-"loop": true,
-"name": &"idle_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_m5g4m")
 }],
 "loop": true,
-"name": &"idle_right",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m8c8l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n2ioy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m8c8l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ow0ht")
+"texture": SubResource("AtlasTexture_krxw5")
 }],
 "loop": true,
-"name": &"left",
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -86,7 +57,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_omkag")
 }],
 "loop": true,
-"name": &"right",
+"name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqwqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5ebx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqwqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omkag")
+}],
+"loop": true,
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -104,11 +92,15 @@ position = Vector2(430, 295)
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
+run = true
+jump = true
+idle = true
+walk = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mario"]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ow0ht")
-animation = &"right"
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mario"]
 position = Vector2(7.5, -6.5)
