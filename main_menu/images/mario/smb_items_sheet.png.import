@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpnmcnvgso7od"
-path="res://.godot/imported/enemies.png-1a0cfa8e174e94ca274085e0546f0240.ctex"
+uid="uid://de1ggwulur5kp"
+path="res://.godot/imported/smb_items_sheet.png-c3f5f656b3fc04233433a0848a5907c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/mario/enemies.png"
-dest_files=["res://.godot/imported/enemies.png-1a0cfa8e174e94ca274085e0546f0240.ctex"]
+source_file="res://main_menu/images/mario/smb_items_sheet.png"
+dest_files=["res://.godot/imported/smb_items_sheet.png-c3f5f656b3fc04233433a0848a5907c5.ctex"]
 
 [params]
 

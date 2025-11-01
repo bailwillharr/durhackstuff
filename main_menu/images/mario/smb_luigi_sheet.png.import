@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr543dc6jp41r"
-path="res://.godot/imported/smb_mario_sheet.png-f4714c014691d6a6bf7f281b60c275e5.ctex"
+uid="uid://dda2p3atpbvkt"
+path="res://.godot/imported/smb_luigi_sheet.png-ca215cf93d28e56ea7fb857fc968f419.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/mario/smb_mario_sheet.png"
-dest_files=["res://.godot/imported/smb_mario_sheet.png-f4714c014691d6a6bf7f281b60c275e5.ctex"]
+source_file="res://main_menu/images/mario/smb_luigi_sheet.png"
+dest_files=["res://.godot/imported/smb_luigi_sheet.png-ca215cf93d28e56ea7fb857fc968f419.ctex"]
 
 [params]
 

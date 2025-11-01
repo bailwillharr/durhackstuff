@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
 
-[ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://images/mario/smb_mario_sheet.png" id="1_jmjmq"]
+[ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
+[ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://main_menu/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dxgqhup5v6umu" path="res://mario/mario_control.gd" id="2_jmjmq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmjmq"]
@@ -11,10 +12,6 @@ region = Rect2(174, 52, 29, 34)
 atlas = ExtResource("1_jmjmq")
 region = Rect2(203, 52, 29, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ow0ht"]
-atlas = ExtResource("1_jmjmq")
-region = Rect2(145, 52, 29, 34)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_m8c8l"]
 atlas = ExtResource("1_jmjmq")
 region = Rect2(116, 52, 29, 34)
@@ -23,9 +20,9 @@ region = Rect2(116, 52, 29, 34)
 atlas = ExtResource("1_jmjmq")
 region = Rect2(87, 52, 29, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_omkag"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow0ht"]
 atlas = ExtResource("1_jmjmq")
-region = Rect2(232, 52, 29, 34)
+region = Rect2(145, 52, 29, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tqwqi"]
 atlas = ExtResource("1_jmjmq")
@@ -34,6 +31,10 @@ region = Rect2(261, 52, 29, 34)
 [sub_resource type="AtlasTexture" id="AtlasTexture_c5ebx"]
 atlas = ExtResource("1_jmjmq")
 region = Rect2(290, 52, 29, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omkag"]
+atlas = ExtResource("1_jmjmq")
+region = Rect2(232, 52, 29, 34)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ow0ht"]
 animations = [{
@@ -55,13 +56,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ow0ht")
+"texture": SubResource("AtlasTexture_m8c8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2ioy")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m8c8l")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n2ioy")
+"texture": SubResource("AtlasTexture_ow0ht")
 }],
 "loop": true,
 "name": &"left",
@@ -69,13 +73,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_omkag")
+"texture": SubResource("AtlasTexture_tqwqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5ebx")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tqwqi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c5ebx")
+"texture": SubResource("AtlasTexture_omkag")
 }],
 "loop": true,
 "name": &"right",
@@ -83,10 +90,13 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_g6g74")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(542, 306)
-scale = Vector2(16.73, 16.73)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ow0ht")
-animation = &"idle_right"
+animation = &"right"
 script = ExtResource("2_jmjmq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
