@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=16 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://main_menu/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
-[ext_resource type="Script" uid="uid://dxgqhup5v6umu" path="res://mario/mario_control.gd" id="2_jmjmq"]
+[ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
+[ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://pacman/Assets/Pacman/Pacman_Death_05.png" id="4_krxw5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmjmq"]
 atlas = ExtResource("1_jmjmq")
@@ -89,14 +90,38 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l02i7"]
+size = Vector2(57, 123)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6n16v"]
+size = Vector2(20, 5.2631454)
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(542, 306)
+[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
+position = Vector2(430, 295)
+script = ExtResource("2_g6g74")
+PlayerSprite = NodePath("AnimatedSprite2D")
+PlayerCollider = NodePath("CollisionShape2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mario"]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ow0ht")
 animation = &"right"
-script = ExtResource("2_jmjmq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mario"]
+position = Vector2(7.5, -6.5)
+shape = SubResource("RectangleShape2D_l02i7")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+position = Vector2(361, 606)
+scale = Vector2(221.24, 9.12)
+texture = ExtResource("4_krxw5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(361, 611)
+scale = Vector2(221.24, 9.12)
+shape = SubResource("RectangleShape2D_6n16v")
