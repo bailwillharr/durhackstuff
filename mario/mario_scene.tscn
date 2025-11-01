@@ -109,6 +109,10 @@ animation = &"walk"
 position = Vector2(7.5, -6.5)
 shape = SubResource("RectangleShape2D_l02i7")
 
+[node name="Camera2D" type="Camera2D" parent="Mario"]
+position = Vector2(7, -7)
+zoom = Vector2(0.595, 0.595)
+
 [node name="Floor" type="StaticBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
