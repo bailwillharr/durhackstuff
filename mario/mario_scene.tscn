@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=17 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
 [ext_resource type="Texture2D" uid="uid://5m2w4ly8xw1h" path="res://mario/images/mario_sheet_alpha.png" id="4_krxw5"]
+[ext_resource type="Shader" uid="uid://dhx0pm74qonx8" path="res://mario/crt2.gdshader" id="5_6n16v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
 atlas = ExtResource("1_jmjmq")
@@ -106,7 +107,20 @@ atlas = ExtResource("4_krxw5")
 region = Rect2(5, 293, 256, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6n16v"]
-size = Vector2(256, 15.5)
+size = Vector2(256, 14.999998)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0hwuu"]
+shader = ExtResource("5_6n16v")
+shader_parameter/screen_width = 640.0
+shader_parameter/screen_height = 480.0
+shader_parameter/BarrelPower = 1.04
+shader_parameter/color_bleeding = 1.0
+shader_parameter/bleeding_range_x = 1.2
+shader_parameter/bleeding_range_y = 1.2
+shader_parameter/lines_distance = 4.0
+shader_parameter/scan_size = 2.0
+shader_parameter/scanline_alpha = 0.9
+shader_parameter/lines_velocity = 30.0
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
@@ -118,7 +132,9 @@ PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
 maxSpeed = 500.0
 runningModifier = true
-jumpHeight = 8.0
+jumpHeight = 3.0
+gravityScale = 40.0
+terminalVelocity = 1000.0
 run = true
 jump = true
 idle = true
@@ -143,18 +159,18 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(530, 607)
+position = Vector2(512, 608)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
 texture = SubResource("AtlasTexture_6n16v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(0, -0.36)
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(-484, 807)
+position = Vector2(-448, 800)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor2"]
@@ -165,7 +181,7 @@ position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor3" type="StaticBody2D" parent="."]
-position = Vector2(-482, 380)
+position = Vector2(-512, 416)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor3"]
@@ -176,7 +192,7 @@ position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor4" type="StaticBody2D" parent="."]
-position = Vector2(-640, 128)
+position = Vector2(-640, 160)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor4"]
@@ -185,3 +201,13 @@ texture = SubResource("AtlasTexture_6n16v")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor4"]
 position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_0hwuu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
