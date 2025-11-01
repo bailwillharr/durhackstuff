@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=26 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
+[ext_resource type="Script" uid="uid://drqp6w4fkwdh0" path="res://mario/mario_ai.gd" id="2_ntyfw"]
 [ext_resource type="Texture2D" uid="uid://5m2w4ly8xw1h" path="res://mario/images/mario_sheet_alpha.png" id="4_krxw5"]
 [ext_resource type="Texture2D" uid="uid://w1xjjw2ygmrb" path="res://gardino/Assets/dino/dino_default_0.png" id="4_rhjew"]
 [ext_resource type="Shader" uid="uid://dhx0pm74qonx8" path="res://mario/crt2.gdshader" id="5_6n16v"]
@@ -138,6 +139,23 @@ animations = [{
 "texture": ExtResource("8_hdsne")
 }],
 "loop": true,
+"name": &"run",
+"speed": 7.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8jl8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hdsne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5tlg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hdsne")
+}],
+"loop": true,
 "name": &"walk",
 "speed": 5.0
 }]
@@ -168,13 +186,13 @@ shader_parameter/lines_velocity = 30.0
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
-visible = false
-position = Vector2(488, 448)
-script = ExtResource("2_g6g74")
+[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider", "Target")]
+position = Vector2(706, 516)
+script = ExtResource("2_ntyfw")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
-maxSpeed = 500.0
+Target = NodePath("../Player")
+maxSpeed = 450.0
 runningModifier = true
 jumpHeight = 3.0
 gravityScale = 40.0
@@ -183,8 +201,6 @@ run = true
 jump = true
 idle = true
 walk = true
-crouch_idle = true
-crouch_walk = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mario"]
 scale = Vector2(4, 4)
@@ -196,7 +212,7 @@ position = Vector2(-0.25, -3.25)
 shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
-position = Vector2(376, 483)
+position = Vector2(361, 440)
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
@@ -206,11 +222,8 @@ jumpHeight = 3.0
 gravityScale = 40.0
 terminalVelocity = 1000.0
 run = true
-jump = true
 idle = true
 walk = true
-crouch_idle = true
-crouch_walk = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(7, -7)
@@ -223,7 +236,7 @@ drag_vertical_enabled = true
 position = Vector2(50, 49)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_mdx8k")
-animation = &"walk"
+animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(51, 54.5)
@@ -282,3 +295,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
