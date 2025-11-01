@@ -1,9 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=15 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
-[ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://pacman/Assets/Pacman/Pacman_Death_05.png" id="4_krxw5"]
+[ext_resource type="Texture2D" uid="uid://5m2w4ly8xw1h" path="res://mario/images/mario_sheet_alpha.png" id="4_krxw5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
+atlas = ExtResource("1_jmjmq")
+region = Rect2(389, 57, 16, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5g4m"]
 atlas = ExtResource("1_jmjmq")
@@ -27,6 +31,22 @@ region = Rect2(232, 52, 29, 34)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ow0ht"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hwuu")
+}],
+"loop": true,
+"name": &"crouch_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hwuu")
+}],
+"loop": true,
+"name": &"crouch_walk",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m5g4m")
@@ -79,16 +99,20 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l02i7"]
-size = Vector2(57, 123)
+size = Vector2(66.5, 129.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n16v"]
+atlas = ExtResource("4_krxw5")
+region = Rect2(5, 293, 256, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6n16v"]
-size = Vector2(20, 5.2631454)
+size = Vector2(256, 15.5)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
 
 [node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
-position = Vector2(430, 295)
+position = Vector2(488, 448)
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
@@ -99,14 +123,16 @@ run = true
 jump = true
 idle = true
 walk = true
+crouch_idle = true
+crouch_walk = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mario"]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ow0ht")
-animation = &"walk"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mario"]
-position = Vector2(7.5, -6.5)
+position = Vector2(-0.25, -3.25)
 shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Camera2D" type="Camera2D" parent="Mario"]
@@ -117,13 +143,45 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(530, 607)
+scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
-position = Vector2(361, 606)
-scale = Vector2(221.24, 9.12)
-texture = ExtResource("4_krxw5")
+texture = SubResource("AtlasTexture_6n16v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(361, 611)
-scale = Vector2(221.24, 9.12)
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="Floor2" type="StaticBody2D" parent="."]
+position = Vector2(-484, 807)
+scale = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2"]
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="Floor3" type="StaticBody2D" parent="."]
+position = Vector2(-482, 380)
+scale = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor3"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3"]
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="Floor4" type="StaticBody2D" parent="."]
+position = Vector2(-640, 128)
+scale = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor4"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor4"]
+position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
