@@ -6,6 +6,7 @@ extends CharacterBody2D
 var pacman: Node2D = null
 
 func _ready() -> void:
+	$AnimatedSprite2D.play("default")
 	if pacman_path != NodePath():
 		pacman = get_node(pacman_path)
 
@@ -24,6 +25,16 @@ func _physics_process(_delta: float) -> void:
 	else:
 		# Move vertically only
 		dir.y = sign(diff.y)
+
+	if dir.y > 0:
+		$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Down.png')
+	elif dir.y < 0:
+		$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Up.png')
+	elif dir.x > 0:
+		$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Right.png')
+	elif dir.x < 0:
+		$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Left.png')
+
 
 	velocity = dir * speed 
 	move_and_slide()
