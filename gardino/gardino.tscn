@@ -1,63 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3srdg0syj2g"]
+[gd_scene load_steps=2 format=3 uid="uid://c3srdg0syj2g"]
 
-[ext_resource type="Script" uid="uid://dbwvyx4uo7bgt" path="res://gardino/dino.gd" id="1_crp1c"]
-[ext_resource type="Texture2D" uid="uid://w1xjjw2ygmrb" path="res://gardino/Assets/dino/dino_default_0.png" id="1_fx5ej"]
-[ext_resource type="Texture2D" uid="uid://dy1fjsu0y7rsx" path="res://gardino/Assets/dino/dino_default_1.png" id="2_crp1c"]
-[ext_resource type="Texture2D" uid="uid://bxtyywuqanmqj" path="res://gardino/Assets/dino/dino_default_2.png" id="3_h0r8q"]
-[ext_resource type="Texture2D" uid="uid://djkp8wcxeohs0" path="res://gardino/Assets/dino/dino_walking_0.png" id="4_7jten"]
-[ext_resource type="Texture2D" uid="uid://cflustvshixvy" path="res://gardino/Assets/dino/dino_walking_1.png" id="5_k8ac5"]
-[ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="6_n0yhm"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_mdx8k"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_fx5ej")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_crp1c")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_h0r8q")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_7jten")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_k8ac5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_n0yhm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_k8ac5")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fx5ej"]
-size = Vector2(102, 117)
+[ext_resource type="PackedScene" uid="uid://bjxoq5ue38u6j" path="res://dino.tscn" id="1_8ijos"]
 
 [node name="Gardino" type="Node2D"]
 position = Vector2(14, 15)
 
-[node name="dino" type="CharacterBody2D" parent="."]
-script = ExtResource("1_crp1c")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dino"]
-position = Vector2(50, 49)
-scale = Vector2(4, 4)
-sprite_frames = SubResource("SpriteFrames_mdx8k")
-animation = &"idle"
-frame_progress = 0.15128495
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="dino"]
-position = Vector2(51, 54.5)
-shape = SubResource("RectangleShape2D_fx5ej")
+[node name="dino" parent="." instance=ExtResource("1_8ijos")]

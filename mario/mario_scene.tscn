@@ -1,10 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=25 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
 [ext_resource type="Texture2D" uid="uid://5m2w4ly8xw1h" path="res://mario/images/mario_sheet_alpha.png" id="4_krxw5"]
+[ext_resource type="Texture2D" uid="uid://w1xjjw2ygmrb" path="res://gardino/Assets/dino/dino_default_0.png" id="4_rhjew"]
 [ext_resource type="Shader" uid="uid://dhx0pm74qonx8" path="res://mario/crt2.gdshader" id="5_6n16v"]
+[ext_resource type="Texture2D" uid="uid://dy1fjsu0y7rsx" path="res://gardino/Assets/dino/dino_default_1.png" id="5_ntyfw"]
+[ext_resource type="Texture2D" uid="uid://bxtyywuqanmqj" path="res://gardino/Assets/dino/dino_default_2.png" id="6_8s81v"]
+[ext_resource type="Texture2D" uid="uid://djkp8wcxeohs0" path="res://gardino/Assets/dino/dino_walking_0.png" id="7_8jl8k"]
+[ext_resource type="Texture2D" uid="uid://cflustvshixvy" path="res://gardino/Assets/dino/dino_walking_1.png" id="8_hdsne"]
+[ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="9_5tlg1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
 atlas = ExtResource("1_jmjmq")
@@ -102,6 +108,43 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l02i7"]
 size = Vector2(66.5, 129.5)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_mdx8k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_rhjew")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ntyfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8s81v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8jl8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hdsne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5tlg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hdsne")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fx5ej"]
+size = Vector2(102, 117)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6n16v"]
 atlas = ExtResource("4_krxw5")
 region = Rect2(5, 293, 256, 16)
@@ -126,6 +169,7 @@ shader_parameter/lines_velocity = 30.0
 script = ExtResource("1_g6g74")
 
 [node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
+visible = false
 position = Vector2(488, 448)
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
@@ -151,12 +195,39 @@ animation = &"idle"
 position = Vector2(-0.25, -3.25)
 shape = SubResource("RectangleShape2D_l02i7")
 
-[node name="Camera2D" type="Camera2D" parent="Mario"]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
+position = Vector2(376, 483)
+script = ExtResource("2_g6g74")
+PlayerSprite = NodePath("AnimatedSprite2D")
+PlayerCollider = NodePath("CollisionShape2D")
+maxSpeed = 500.0
+runningModifier = true
+jumpHeight = 3.0
+gravityScale = 40.0
+terminalVelocity = 1000.0
+run = true
+jump = true
+idle = true
+walk = true
+crouch_idle = true
+crouch_walk = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(7, -7)
 zoom = Vector2(0.595, 0.595)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(50, 49)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_mdx8k")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(51, 54.5)
+shape = SubResource("RectangleShape2D_fx5ej")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(512, 608)
