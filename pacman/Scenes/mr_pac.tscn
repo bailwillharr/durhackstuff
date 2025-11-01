@@ -1,15 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://yjyx28kgqqnp"]
+[gd_scene load_steps=6 format=3 uid="uid://yjyx28kgqqnp"]
 
+[ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://pacman/Assets/Pacman/Pacman_01.png" id="1_yhdkw"]
 [ext_resource type="Texture2D" uid="uid://h71ud3s8c8n3" path="res://pacman/Assets/Pacman/Pacman_02.png" id="2_yhdkw"]
+[ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://pacman/Assets/Pacman/Pacman_03.png" id="3_3mbeg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3mbeg"]
 radius = 7.0
 
-[node name="mrPac" type="CharacterBody2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ukjk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_yhdkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yhdkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3mbeg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yhdkw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("2_yhdkw")
+[node name="mrPac" type="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3mbeg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6ukjk")
+frame_progress = 0.67391217
+speed_scale = 2.0
