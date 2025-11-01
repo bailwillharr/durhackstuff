@@ -29,12 +29,14 @@ animations = [{
 }]
 
 [node name="mrPac" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_3mbeg")
+speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3mbeg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jnw4u")
-frame_progress = 0.10501553
+frame_progress = 0.8836408
 speed_scale = 2.0
-script = ExtResource("1_3mbeg")
