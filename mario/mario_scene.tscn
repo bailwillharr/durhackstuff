@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
-[ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://main_menu/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
+[ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
 [ext_resource type="Script" uid="uid://dr88ygphxq38u" path="res://mario/UltimatePlatformerController.gd" id="2_g6g74"]
 [ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://pacman/Assets/Pacman/Pacman_Death_05.png" id="4_krxw5"]
 
@@ -112,6 +112,9 @@ shape = SubResource("RectangleShape2D_l02i7")
 [node name="Camera2D" type="Camera2D" parent="Mario"]
 position = Vector2(7, -7)
 zoom = Vector2(0.595, 0.595)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
 
