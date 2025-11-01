@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4tvkjm54uy21"]
+
+[ext_resource type="Script" uid="uid://cm31hk85xhm3e" path="res://main_menu/pacman_button.gd" id="2_3shxk"]
+[ext_resource type="Script" uid="uid://d14l7p3mkre32" path="res://main_menu/mario_button.gd" id="2_d3a7t"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarioButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 52.0
+offset_bottom = 16.0
+text = "MARIO"
+script = ExtResource("2_d3a7t")
+
+[node name="PacmanButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 38.0
+offset_right = 83.0
+offset_bottom = 69.0
+text = "PACMAN"
+script = ExtResource("2_3shxk")
+
+[connection signal="pressed" from="MarioButton" to="MarioButton" method="_on_pressed"]
+[connection signal="pressed" from="PacmanButton" to="PacmanButton" method="_on_pressed"]
