@@ -21,7 +21,7 @@ animations = [{
 "texture": ExtResource("3_h0r8q")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -43,7 +43,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fx5ej"]
-size = Vector2(28, 30)
+size = Vector2(102, 117)
 
 [node name="Gardino" type="Node2D"]
 position = Vector2(14, 15)
@@ -52,10 +52,12 @@ position = Vector2(14, 15)
 script = ExtResource("1_crp1c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dino"]
+position = Vector2(50, 49)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_mdx8k")
-animation = &"walk"
-frame_progress = 0.27181685
+animation = &"idle"
+frame_progress = 0.15128495
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="dino"]
-position = Vector2(0, 1)
+position = Vector2(51, 54.5)
 shape = SubResource("RectangleShape2D_fx5ej")
