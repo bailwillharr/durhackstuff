@@ -1,28 +1,31 @@
-extends AnimatedSprite2D
+extends CharacterBody2D
 
-@export var speed: float = 200.0
+@export var speed = 200
 
-var velocity: Vector2 = Vector2.ZERO
 
-func _ready() -> void:
-	play("default")
+func _ready():
+	$AnimatedSprite2D.play("default")
 
-func _process(delta: float) -> void:
-	velocity = Vector2.ZERO
 
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-	elif Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	elif Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-	elif Input.is_action_pressed("ui_down"):
-		velocity.y += 1
+func _process(delta):
+	if Input.is_action_pressed("right"):
+		$AnimatedSprite2D.rotation = 0
+		velocity.x = 1
+		velocity.y = 0
+	elif Input.is_action_pressed("left"):
+		$AnimatedSprite2D.rotation = PI
+		velocity.x = - 1
+		velocity.y = 0
+	elif Input.is_action_pressed("down"):
+		$AnimatedSprite2D.rotation = PI/2
+		velocity.y = 1
+		velocity.x = 0
+	elif Input.is_action_pressed("up"):
+		$AnimatedSprite2D.rotation = 3 * PI/2
+		velocity.y = -1
+		velocity.x = 0
 
-	# Normalize so diagonal movement doesn’t go faster
 	if velocity != Vector2.ZERO:
-		velocity = velocity.normalized() * speed * delta
-		position += velocity
+		velocity = velocity.normalized() * speed
 
-		# Rotate sprite toward direction of movement
-		rotation = velocity.angle()
+	position += velocity * delta
