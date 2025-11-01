@@ -29,4 +29,3 @@ func _process(delta):
 		$AnimatedSprite2D.play("idle")
 
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
