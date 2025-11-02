@@ -35,7 +35,7 @@ func gameOver():
 	get_tree().reload_current_scene()
 
 func _on_deathzone_body_entered(body: Node2D) -> void:
-
+	pass
 	gameOver()
 
 

@@ -1,47 +1,88 @@
-[gd_scene load_steps=10 format=3 uid="uid://dv0oba3jv3st2"]
+[gd_scene load_steps=18 format=3 uid="uid://dv0oba3jv3st2"]
 
 [ext_resource type="PackedScene" uid="uid://b4yqt20fg36v4" path="res://breakout/scenes/paddle.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://e1j73onri865" path="res://breakout/scripts/level.gd" id="1_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://bwthlo64pi2gx" path="res://breakout/scenes/ball.tscn" id="2_w7c3h"]
 [ext_resource type="PackedScene" uid="uid://be6m7brci0ic2" path="res://breakout/scenes/brick.tscn" id="3_w8frs"]
-[ext_resource type="Texture2D" uid="uid://bejk6kved71lg" path="res://breakout/assets/0f0f0378-e0cc-4f27-aa82-be980337a7e4.png" id="5_ppgk2"]
+[ext_resource type="Script" uid="uid://dawddqld41dwl" path="res://breakout/scripts/Lava.gd" id="6_205et"]
+[ext_resource type="Shader" uid="uid://dhx0pm74qonx8" path="res://mario/crt2.gdshader" id="7_n4jw5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
-size = Vector2(20, 648)
+size = Vector2(10, 694)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
-size = Vector2(70, 653)
+size = Vector2(70, 694.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mx8sn"]
-size = Vector2(1205, 20)
+size = Vector2(1272, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_205et"]
+size = Vector2(1383, 104.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
 size = Vector2(1164, 20)
 
-[node name="Level" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwaui"]
+size = Vector2(1333, 84)
+
+[sub_resource type="Gradient" id="Gradient_n4jw5"]
+offsets = PackedFloat32Array(0.99333334)
+colors = PackedColorArray(0.4503125, 0.14454225, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wjld4"]
+gradient = SubResource("Gradient_n4jw5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wjld4"]
+shader = ExtResource("7_n4jw5")
+shader_parameter/screen_width = 1024.0
+shader_parameter/screen_height = 600.0
+shader_parameter/BarrelPower = 1.1
+shader_parameter/color_bleeding = 1.2
+shader_parameter/bleeding_range_x = 3.0
+shader_parameter/bleeding_range_y = 3.0
+shader_parameter/lines_distance = 4.0
+shader_parameter/scan_size = 2.0
+shader_parameter/scanline_alpha = 0.9
+shader_parameter/lines_velocity = 30.0
+
+[sub_resource type="Gradient" id="Gradient_205et"]
+colors = PackedColorArray(0, 0, 1, 1, 0.15686275, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n4jw5"]
+gradient = SubResource("Gradient_205et")
+fill_from = Vector2(0.7616823, 1)
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("paddle")]
 script = ExtResource("1_mx8sn")
+paddle = NodePath("Paddle")
+ball_scene = ExtResource("2_w7c3h")
 
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2(570, 520)
 
 [node name="Left Wall" type="CollisionShape2D" parent="Walls"]
-position = Vector2(-579, -196)
+position = Vector2(-625, -178)
 shape = SubResource("RectangleShape2D_w7c3h")
 
 [node name="Right Wall" type="CollisionShape2D" parent="Walls"]
-position = Vector2(611, -195)
+position = Vector2(733, -184)
 shape = SubResource("RectangleShape2D_w8frs")
 
 [node name="Ceiling" type="CollisionShape2D" parent="Walls"]
-position = Vector2(29.5, -529)
+position = Vector2(63, -529)
 shape = SubResource("RectangleShape2D_mx8sn")
+
+[node name="floor" type="CollisionShape2D" parent="Walls"]
+position = Vector2(63, 185)
+shape = SubResource("RectangleShape2D_205et")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(605, 334)
 zoom = Vector2(0.72, 0.72)
 
 [node name="Paddle" parent="." instance=ExtResource("1_2q6dc")]
-position = Vector2(566, 518)
+position = Vector2(588, 652)
+wall_min_slide_angle = 0.0
 
 [node name="Ball" parent="." instance=ExtResource("2_w7c3h")]
 position = Vector2(573, 323)
@@ -49,19 +90,47 @@ motion_mode = 1
 
 [node name="Brick" parent="." instance=ExtResource("3_w8frs")]
 position = Vector2(258, 600)
-scale = Vector2(0.36, 0.36)
-
-[node name="background" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.15686275)
-z_index = -110
-position = Vector2(610, 343)
-texture = ExtResource("5_ppgk2")
 
 [node name="Deathzone" type="Area2D" parent="."]
-position = Vector2(607.52, 343)
+position = Vector2(2122, -655)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
-position = Vector2(-21.52002, 373)
+position = Vector2(-23.765, 964)
 shape = SubResource("RectangleShape2D_ppgk2")
 
+[node name="Lava" type="Area2D" parent="."]
+position = Vector2(-17, -3)
+script = ExtResource("6_205et")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lava"]
+position = Vector2(634, 725)
+shape = SubResource("RectangleShape2D_wwaui")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lava"]
+position = Vector2(649, 762.99994)
+scale = Vector2(6.671622, 183.5)
+texture = SubResource("GradientTexture1D_wjld4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_wjld4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BallTimer" type="Timer" parent="."]
+wait_time = 4096.0
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -80
+position = Vector2(608.00006, 170.00002)
+scale = Vector2(42.12, 16.439999)
+texture = SubResource("GradientTexture2D_n4jw5")
+
 [connection signal="body_entered" from="Deathzone" to="Ball" method="_on_deathzone_body_entered"]
+[connection signal="body_entered" from="Lava" to="Lava" method="_on_body_entered"]
+[connection signal="timeout" from="BallTimer" to="." method="_on_ball_timer_timeout"]

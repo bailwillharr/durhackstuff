@@ -1,6 +1,20 @@
 extends RigidBody2D
 
 
+
+
+@export var has_powerup := false
+@onready var powerup_scene = preload("res://breakout/scenes/PowerUp.tscn")
+
+func destroy():
+	if has_powerup:
+		var powerup = powerup_scene.instantiate()
+		powerup.position = position
+		get_parent().add_child(powerup)
+	queue_free()
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
