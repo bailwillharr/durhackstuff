@@ -61,4 +61,8 @@ func pellet_eaten(pellet):
 
 func game_over():
 	get_tree().paused = true
-	print("All pellets eaten! Game over!")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://pacman/scenes/pacwinner.tscn")
+	await get_tree().create_timer(5.0).timeout
+	get_tree().change_scene_to_file("res://gardino/gardino.tscn")
+
