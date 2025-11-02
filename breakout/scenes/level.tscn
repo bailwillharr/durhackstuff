@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dv0oba3jv3st2"]
+[gd_scene load_steps=17 format=3 uid="uid://dv0oba3jv3st2"]
 
 [ext_resource type="PackedScene" uid="uid://b4yqt20fg36v4" path="res://breakout/scenes/paddle.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://e1j73onri865" path="res://breakout/scripts/level.gd" id="1_mx8sn"]
@@ -18,9 +18,6 @@ size = Vector2(1272, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_205et"]
 size = Vector2(1383, 104.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
-size = Vector2(1164, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwaui"]
 size = Vector2(1333, 84)
@@ -56,6 +53,8 @@ fill_from = Vector2(0.7616823, 1)
 script = ExtResource("1_mx8sn")
 paddle = NodePath("Paddle")
 ball_scene = ExtResource("2_w7c3h")
+brick_spawn_interval = 0.1
+max_bricks = 205
 
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2(570, 520)
@@ -69,7 +68,7 @@ position = Vector2(733, -184)
 shape = SubResource("RectangleShape2D_w8frs")
 
 [node name="Ceiling" type="CollisionShape2D" parent="Walls"]
-position = Vector2(63, -529)
+position = Vector2(-1354, -529)
 shape = SubResource("RectangleShape2D_mx8sn")
 
 [node name="floor" type="CollisionShape2D" parent="Walls"]
@@ -89,14 +88,7 @@ position = Vector2(573, 323)
 motion_mode = 1
 
 [node name="Brick" parent="." instance=ExtResource("3_w8frs")]
-position = Vector2(258, 600)
-
-[node name="Deathzone" type="Area2D" parent="."]
-position = Vector2(2122, -655)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
-position = Vector2(-23.765, 964)
-shape = SubResource("RectangleShape2D_ppgk2")
+position = Vector2(257.745, 200)
 
 [node name="Lava" type="Area2D" parent="."]
 position = Vector2(-17, -3)
@@ -122,7 +114,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BallTimer" type="Timer" parent="."]
-wait_time = 4096.0
+wait_time = 5.0
 autostart = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -131,6 +123,5 @@ position = Vector2(608.00006, 170.00002)
 scale = Vector2(42.12, 16.439999)
 texture = SubResource("GradientTexture2D_n4jw5")
 
-[connection signal="body_entered" from="Deathzone" to="Ball" method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Lava" to="Lava" method="_on_body_entered"]
 [connection signal="timeout" from="BallTimer" to="." method="_on_ball_timer_timeout"]

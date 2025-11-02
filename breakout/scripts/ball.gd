@@ -1,13 +1,18 @@
 extends CharacterBody2D
 
 var speed = 400 # initial speed
-var dir = Vector2.DOWN #which direction
+var dir = Vector2.UP #which direction
 var is_active = true
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	velocity = Vector2(speed * -1,speed) # set initial direction for the ball when scene loads
 
+
+func _ready() -> void:
+	randomize()
+	var x_dir = 1
+	if randf() < 0.5:
+		x_dir = -1
+	# Give the ball a random left/right start
+	velocity = Vector2(speed * x_dir, -speed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
