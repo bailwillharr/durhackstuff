@@ -356,12 +356,46 @@ func _physics_process(delta):
 	twirlTap = Input.is_action_just_pressed("twirl")
 	
 	if velocity.y > 40:
-		for i in 5:
-			var rayq = PhysicsRayQueryParameters2D.create(transform.get_origin() + Vector2(i * 10 - 25, 0), transform.get_origin() + Vector2(i * 10 - 25, 160))
-			var cast = get_world_2d().direct_space_state.intersect_ray(rayq)
-			if !cast.is_empty():
-				if cast["collider"].name.find("Goomba") != -1:
-					emit_signal("killed_goomba", cast["collider"])
+		for i in 1:
+			if $RayCast2D.is_colliding():
+				#print($RayCast2D.get_collider().name)
+				if $RayCast2D.get_collider().name.find("Goomba") != -1:
+					emit_signal("killed_goomba", $RayCast2D.get_collider())
+					break
+			if $RayCast2D2.is_colliding():
+				#print($RayCast2D2.get_collider().name)
+				if $RayCast2D2.get_collider().name.find("Goomba") != -1:
+					emit_signal("killed_goomba", $RayCast2D2.get_collider())
+					break
+			if $RayCast2D3.is_colliding():
+				#print($RayCast2D3.get_collider().name)
+				if $RayCast2D3.get_collider().name.find("Goomba") != -1:
+					#print(3)
+					emit_signal("killed_goomba", $RayCast2D3.get_collider())
+					break
+			if $RayCast2D4.is_colliding():
+				#print($RayCast2D4.get_collider().name)
+				if $RayCast2D4.get_collider().name.find("Goomba") != -1:
+					#print(4)
+					emit_signal("killed_goomba", $RayCast2D4.get_collider())
+					break
+			if $RayCast2D5.is_colliding():
+				#print($RayCast2D5.get_collider().name)
+				if $RayCast2D5.get_collider().name.find("Goomba") != -1:
+					#print(5)
+					emit_signal("killed_goomba", $RayCast2D5.get_collider())
+					break
+			if $RayCast2D6.is_colliding():
+				#print($RayCast2D6.get_collider().name)
+				if $RayCast2D6.get_collider().name.find("Goomba") != -1:
+					#print(6)
+					emit_signal("killed_goomba", $RayCast2D6.get_collider())
+					break
+			if $RayCast2D7.is_colliding():
+				#print($RayCast2D7.get_collider().name)
+				if $RayCast2D7.get_collider().name.find("Goomba") != -1:
+					#print(7)
+					emit_signal("killed_goomba", $RayCast2D7.get_collider())
 					break
 	
 	#INFO Left and Right Movement

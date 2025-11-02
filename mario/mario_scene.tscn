@@ -300,7 +300,7 @@ position = Vector2(-3, -4)
 shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
-position = Vector2(768, 448)
+position = Vector2(889, 390)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_g6g74")
@@ -333,6 +333,34 @@ frame_progress = 0.16674672
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(43, 54.5)
 shape = SubResource("RectangleShape2D_fx5ej")
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+position = Vector2(-1, 115)
+collision_mask = 3
+
+[node name="RayCast2D2" type="RayCast2D" parent="Player"]
+position = Vector2(13, 115)
+collision_mask = 3
+
+[node name="RayCast2D3" type="RayCast2D" parent="Player"]
+position = Vector2(28, 115)
+collision_mask = 3
+
+[node name="RayCast2D4" type="RayCast2D" parent="Player"]
+position = Vector2(40, 116)
+collision_mask = 3
+
+[node name="RayCast2D5" type="RayCast2D" parent="Player"]
+position = Vector2(54, 116)
+collision_mask = 3
+
+[node name="RayCast2D6" type="RayCast2D" parent="Player"]
+position = Vector2(66, 116)
+collision_mask = 3
+
+[node name="RayCast2D7" type="RayCast2D" parent="Player"]
+position = Vector2(78, 116)
+collision_mask = 3
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(512, 640)
@@ -437,7 +465,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("13_8s81v")
 script = ExtResource("14_8jl8k")
 
-[node name="Goomba" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
+[node name="Goomba5" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
 position = Vector2(1881, 691)
 scale = Vector2(4, 4)
 collision_layer = 2
@@ -445,20 +473,20 @@ script = ExtResource("15_5tlg1")
 Speed = 100
 Player = NodePath("../Player")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba5"]
 sprite_frames = SubResource("SpriteFrames_ixms2")
 animation = &"dying"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba5"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_34rug")
 
-[node name="RayCast2DRight" type="RayCast2D" parent="Goomba"]
+[node name="RayCast2DRight" type="RayCast2D" parent="Goomba5"]
 position = Vector2(12, 0)
 target_position = Vector2(0, 30)
 collide_with_areas = true
 
-[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba"]
+[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba5"]
 position = Vector2(-12, 0)
 target_position = Vector2(0, 30)
 
@@ -515,9 +543,9 @@ target_position = Vector2(0, 30)
 [connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
 [connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
-[connection signal="killed_goomba" from="Player" to="Goomba" method="_on_player_killed_goomba"]
-[connection signal="player_died" from="Goomba" to="Player" method="_on_mario_player_died"]
-[connection signal="player_died" from="Goomba" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="killed_goomba" from="Player" to="Goomba5" method="_on_player_killed_goomba"]
+[connection signal="player_died" from="Goomba5" to="Player" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba5" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba3" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba3" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba2" to="Player" method="_on_mario_player_died"]
