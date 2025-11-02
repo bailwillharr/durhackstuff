@@ -33,7 +33,6 @@ func _unhandled_input(event):
 				$visuals.flip_h = true
 			$visuals.play("walk")
 			move(dir)
-			print(player_tile)
 
 			if player_tile.x < 0:
 				player_tile.x += zone_size.x
