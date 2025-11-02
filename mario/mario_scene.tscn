@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=38 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="9_5tlg1"]
 [ext_resource type="Texture2D" uid="uid://trv5qhpuaecp" path="res://mario/images/deathtext.png" id="13_8s81v"]
 [ext_resource type="Script" uid="uid://dy051krj6q70h" path="res://mario/death_screen.gd" id="14_8jl8k"]
+[ext_resource type="Script" uid="uid://o4dscwsqbide" path="res://mario/goomba.gd" id="15_5tlg1"]
+[ext_resource type="Texture2D" uid="uid://cpnmcnvgso7od" path="res://mario/images/mario/enemies.png" id="15_hdsne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
 atlas = ExtResource("1_jmjmq")
@@ -185,6 +187,69 @@ shader_parameter/scan_size = 2.0
 shader_parameter/scanline_alpha = 0.9
 shader_parameter/lines_velocity = 30.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tlg1"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(330, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrvoh"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(360, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ql58"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(180, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3524"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(150, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw4h3"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(210, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hghvi"]
+atlas = ExtResource("15_hdsne")
+region = Rect2(240, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixms2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tlg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrvoh")
+}],
+"loop": true,
+"name": &"dying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ql58")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3524")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hw4h3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hghvi")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34rug"]
+size = Vector2(20, 23)
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
 
@@ -269,7 +334,7 @@ shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor3" type="StaticBody2D" parent="."]
 position = Vector2(2432, 576)
-scale = Vector2(4, 4)
+scale = Vector2(3.995, 3.995)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor3"]
 texture = SubResource("AtlasTexture_6n16v")
@@ -301,13 +366,36 @@ grow_vertical = 2
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="CanvasLayer"]
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CanvasLayer3"]
+[node name="deathmsg" type="Sprite2D" parent="CanvasLayer/CanvasLayer3"]
 visible = false
 position = Vector2(768, 320)
 scale = Vector2(3, 3)
 texture = ExtResource("13_8s81v")
 script = ExtResource("14_8jl8k")
 
+[node name="Goomba" type="StaticBody2D" parent="."]
+position = Vector2(1409, 692)
+scale = Vector2(4, 4)
+script = ExtResource("15_5tlg1")
+Speed = 100
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba"]
+sprite_frames = SubResource("SpriteFrames_ixms2")
+animation = &"right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_34rug")
+
+[node name="RayCast2DRight" type="RayCast2D" parent="Goomba"]
+position = Vector2(12.245, 0)
+target_position = Vector2(0, 38.11)
+collide_with_areas = true
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba"]
+position = Vector2(-75, 0)
+target_position = Vector2(0, 75)
+
 [connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
 [connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
-[connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/Sprite2D" method="_on_mario_player_died"]
+[connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
