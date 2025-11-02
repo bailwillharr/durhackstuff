@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvbu3lrpa2ped"]
+
+[ext_resource type="Script" uid="uid://khtf04kyek82" path="res://scripts/Lane.gd" id="1_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://b6sihnrvg3q6k" path="res://scenes/Player.tscn" id="2_rarhs"]
+[ext_resource type="Script" uid="uid://bmwuoiremwv3y" path="res://scripts/River.gd" id="3_c01mt"]
+[ext_resource type="PackedScene" uid="uid://c53dkcfl4o44c" path="res://scenes/Car.tscn" id="3_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://bx7oa4xnvf8ih" path="res://scenes/Log.tscn" id="4_nxtc6"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Road" type="Node2D" parent="."]
+position = Vector2(1, 59)
+
+[node name="Lane1" type="Node2D" parent="Road"]
+position = Vector2(0, 181)
+script = ExtResource("1_0bbpv")
+car_scene = ExtResource("3_vcsgt")
+car_count = 3
+lane_speed = 33.0
+lane_width = 860
+
+[node name="Lane2" type="Node2D" parent="Road"]
+position = Vector2(-2, 307)
+script = ExtResource("1_0bbpv")
+car_scene = ExtResource("3_vcsgt")
+
+[node name="Water" type="Node2D" parent="."]
+
+[node name="Lane3" type="Node2D" parent="Water"]
+position = Vector2(-1, 309)
+script = ExtResource("3_c01mt")
+log_scene = ExtResource("4_nxtc6")
+log_count = 4
+river_width = 1475
+
+[node name="Grass" type="Node2D" parent="."]
+visible = false
+position = Vector2(3.0000114, 88)
+scale = Vector2(66, 66)
+
+[node name="Player" parent="." instance=ExtResource("2_rarhs")]
+z_index = 295
+position = Vector2(98, 67.00001)
+scale = Vector2(66.375, 66.375)
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -2
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+offset_left = -2.0
+offset_top = 400.0
+offset_right = 1150.0
+offset_bottom = 651.0
+color = Color(0.0741548, 0.7673193, 3.85046e-07, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="Background"]
+offset_left = 3.0
+offset_top = 142.0
+offset_right = 1155.0
+offset_bottom = 393.0
+color = Color(0.0741548, 0.7673193, 3.85046e-07, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Background"]
+offset_left = -2.0
+offset_top = 331.0
+offset_right = 1151.0
+offset_bottom = 399.0
+color = Color(0.21213469, 0.06724452, 0.024900552, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Background"]
+offset_top = 202.0
+offset_right = 1153.0
+offset_bottom = 270.0
+color = Color(0.21213469, 0.06724452, 0.024900552, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Background"]
+offset_left = 3.0
+offset_top = 272.0
+offset_right = 1156.0
+offset_bottom = 336.0
+color = Color(0.36869717, 0.9999997, 0.85448575, 1)
