@@ -1,19 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://bx7oa4xnvf8ih"]
 
-[ext_resource type="Script" uid="uid://c7n74jsxnvegv" path="res://scripts/log.gd" id="1_pik0d"]
-[ext_resource type="Texture2D" uid="uid://bapohf0wgnbve" path="res://sprites/log.png" id="2_r0i0m"]
+[ext_resource type="Script" uid="uid://c7n74jsxnvegv" path="res://frogger/scripts/log.gd" id="1_pik0d"]
+[ext_resource type="Texture2D" uid="uid://dslhmen3f55cf" path="res://frogger/assets/log.png" id="2_6d84i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0i0m"]
-size = Vector2(38, 38)
+size = Vector2(14.399778, 14.177061)
 
 [node name="Log" type="Area2D"]
 z_index = 80
 script = ExtResource("1_pik0d")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("2_r0i0m")
+position = Vector2(16, 16)
+texture = ExtResource("2_6d84i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(15.836252, 16.086252)
 scale = Vector2(2.245, 2.245)
 shape = SubResource("RectangleShape2D_r0i0m")

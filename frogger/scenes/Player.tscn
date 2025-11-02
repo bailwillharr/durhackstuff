@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6sihnrvg3q6k"]
 
-[ext_resource type="Script" uid="uid://qx5jr6mti1bi" path="res://scripts/Player.gd" id="1_p0vlq"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v6fml"]
+[ext_resource type="Script" uid="uid://qx5jr6mti1bi" path="res://frogger/scripts/Player.gd" id="1_p0vlq"]
+[ext_resource type="Texture2D" uid="uid://cpaqwbf3gf0e7" path="res://frogger/assets/peppers.png" id="2_6v45y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3li8b"]
 size = Vector2(2, 2)
@@ -11,7 +10,8 @@ size = Vector2(2, 2)
 script = ExtResource("1_p0vlq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_v6fml")
+position = Vector2(16, 16)
+texture = ExtResource("2_6v45y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3li8b")
