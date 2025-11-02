@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 			if scale.y < 0:
 				scale.y = 0
 		else:
-			get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
+			get_tree().change_scene_to_file("res://gardino/gardino.tscn")
 	pass
 
 

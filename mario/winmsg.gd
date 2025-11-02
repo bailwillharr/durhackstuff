@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 		if position.y > 500:
 			position.y -= delta * 100
 		else:
-			get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
+			get_tree().change_scene_to_file("res://gardino/gardino.tscn")
 
 
 func _on_player_win_signal() -> void:
