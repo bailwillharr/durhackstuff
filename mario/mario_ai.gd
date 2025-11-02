@@ -790,3 +790,8 @@ func _placeHolder():
 
 func _on_draw() -> void:
 	pass
+
+
+func _on_player_win_signal() -> void:
+	queue_free()
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=45 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
@@ -15,7 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://trv5qhpuaecp" path="res://mario/images/deathtext.png" id="13_8s81v"]
 [ext_resource type="Script" uid="uid://dy051krj6q70h" path="res://mario/death_screen.gd" id="14_8jl8k"]
 [ext_resource type="Script" uid="uid://o4dscwsqbide" path="res://mario/goomba.gd" id="15_5tlg1"]
+[ext_resource type="Texture2D" uid="uid://b77kxr2wqfvwc" path="res://mario/images/wintext.png" id="15_6ql58"]
 [ext_resource type="Texture2D" uid="uid://cpnmcnvgso7od" path="res://mario/images/mario/enemies.png" id="15_hdsne"]
+[ext_resource type="Script" uid="uid://bsimewp0621gr" path="res://mario/winmsg.gd" id="16_e3524"]
+[ext_resource type="Texture2D" uid="uid://tmqnwq83h2k6" path="res://mario/images/mario/smb1_scenery_sprites.png" id="17_nrvoh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
 atlas = ExtResource("1_jmjmq")
@@ -269,6 +272,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_34rug"]
 size = Vector2(20, 23)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dq7sa"]
+atlas = ExtResource("17_nrvoh")
+region = Rect2(78.82028, 766.90094, 148.23827, 176.06451)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ql58"]
+size = Vector2(68, 128)
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_g6g74")
 
@@ -279,7 +289,7 @@ script = ExtResource("2_ntyfw")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
 Target = NodePath("../Player")
-maxSpeed = 1100.0
+maxSpeed = 1200.0
 runningModifier = true
 jumpHeight = 3.0
 gravityScale = 40.0
@@ -299,13 +309,14 @@ frame_progress = 0.9555531
 position = Vector2(-3, -4)
 shape = SubResource("RectangleShape2D_l02i7")
 
-[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider", "WinText")]
 position = Vector2(889, 390)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
+WinText = NodePath("../CanvasLayer/CanvasLayer3/winmsg")
 maxSpeed = 500.0
 runningModifier = true
 jumpHeight = 3.0
@@ -422,21 +433,9 @@ texture = SubResource("AtlasTexture_6n16v")
 position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
-[node name="Floor6" type="StaticBody2D" parent="."]
-position = Vector2(5027, 1190)
-scale = Vector2(4, 4)
-collision_layer = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="Floor6"]
-texture = SubResource("AtlasTexture_6n16v")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor6"]
-position = Vector2(0, -0.36)
-shape = SubResource("RectangleShape2D_6n16v")
-
 [node name="Floor7" type="StaticBody2D" parent="."]
-position = Vector2(6051, 1190)
-scale = Vector2(4, 4)
+position = Vector2(5028, 1072)
+scale = Vector2(3.9874399, 4.020855)
 collision_layer = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor7"]
@@ -464,6 +463,13 @@ position = Vector2(768, 320)
 scale = Vector2(3, 3)
 texture = ExtResource("13_8s81v")
 script = ExtResource("14_8jl8k")
+
+[node name="winmsg" type="Sprite2D" parent="CanvasLayer/CanvasLayer3"]
+visible = false
+position = Vector2(537.00006, 703)
+scale = Vector2(2.115, 2.2)
+texture = ExtResource("15_6ql58")
+script = ExtResource("16_e3524")
 
 [node name="Goomba5" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
 position = Vector2(1881, 691)
@@ -515,6 +521,31 @@ collide_with_areas = true
 position = Vector2(-12, 0)
 target_position = Vector2(0, 30)
 
+[node name="Goomba4" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
+position = Vector2(3651, 692)
+scale = Vector2(4, 4)
+collision_layer = 2
+script = ExtResource("15_5tlg1")
+Speed = 100
+Player = NodePath("../Player")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba4"]
+sprite_frames = SubResource("SpriteFrames_ixms2")
+animation = &"dying"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba4"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_34rug")
+
+[node name="RayCast2DRight" type="RayCast2D" parent="Goomba4"]
+position = Vector2(12, 0)
+target_position = Vector2(0, 30)
+collide_with_areas = true
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba4"]
+position = Vector2(-12, 0)
+target_position = Vector2(0, 30)
+
 [node name="Goomba2" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
 position = Vector2(2667, 499)
 scale = Vector2(4, 4)
@@ -540,15 +571,33 @@ collide_with_areas = true
 position = Vector2(-12, 0)
 target_position = Vector2(0, 30)
 
+[node name="WinCastle" type="Area2D" parent="."]
+position = Vector2(5243, 688)
+scale = Vector2(0.99685997, 1.0052137)
+
+[node name="Sprite2D" type="Sprite2D" parent="WinCastle"]
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_dq7sa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinCastle"]
+position = Vector2(-11.03471, 270.58917)
+scale = Vector2(-5.058177, 1.281989)
+shape = SubResource("RectangleShape2D_6ql58")
+
 [connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
 [connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="killed_goomba" from="Player" to="Goomba5" method="_on_player_killed_goomba"]
 [connection signal="killed_goomba" from="Player" to="Goomba3" method="_on_player_killed_goomba"]
 [connection signal="killed_goomba" from="Player" to="Goomba2" method="_on_player_killed_goomba"]
+[connection signal="win_signal" from="Player" to="Mario" method="_on_player_win_signal"]
+[connection signal="win_signal" from="Player" to="CanvasLayer/CanvasLayer3/winmsg" method="_on_player_win_signal"]
 [connection signal="player_died" from="Goomba5" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba5" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba3" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba3" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba4" to="Player" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba4" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba2" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba2" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="body_entered" from="WinCastle" to="Player" method="_on_win_castle_body_entered"]
