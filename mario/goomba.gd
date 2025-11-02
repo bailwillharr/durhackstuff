@@ -1,6 +1,9 @@
 extends StaticBody2D
 
 @export var Speed = 10
+@export var Player: PlatformerController2D
+
+signal player_died
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,3 +27,5 @@ func _process(delta: float) -> void:
 	else:
 		$AnimatedSprite2D.play("left")
 		position.x -= delta * Speed
+	if ((transform.get_origin() - Player.transform.get_origin()).length()) < 100:
+		emit_signal("player_died")
