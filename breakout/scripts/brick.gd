@@ -12,9 +12,6 @@ func _process(delta: float) -> void:
 
 
 func hit():
-
-	GameManager.addPoints(1)
-
 	$Sprite2D.visible = false
 	$CollisionShape2D.disabled =true
 
@@ -22,7 +19,6 @@ func hit():
 	if bricksLeft.size() == 1:
 		get_parent().get_node("Ball").is_active = false
 		await get_tree().create_timer(1).timeout
-		GameManager.level+=1
 		get_tree().reload_current_scene()
 	else:
 

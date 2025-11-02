@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@onready var brickObject = preload("res://scenes/brick.tscn")
+@onready var brickObject = preload("res://breakout/scenes/brick.tscn")
 
 
 var columns = 14
