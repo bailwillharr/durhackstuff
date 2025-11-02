@@ -3,11 +3,13 @@ extends Area2D
 @export var tile_size := 24
 @export var animation_speed := 24
 @export var pacman_path: NodePath
-@export var ambush_distance := 4  # tiles ahead of Pacman
+@export var blinky_path: NodePath
+@export var ahead_distance := 2  # tiles ahead of Pacman for calculation
 
 var moving := false
 var current_dir := Vector2.ZERO
 var pacman: Node2D = null
+var blinky: Node2D = null
 var directions := [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 
 @onready var ray := $RayCast2D
@@ -17,19 +19,29 @@ func _ready():
 	add_to_group("ghost")
 	sprite.play("default")
 	position = position.snapped(Vector2.ONE * (tile_size / 2))
+
 	if pacman_path != NodePath():
 		pacman = get_node(pacman_path)
+	if blinky_path != NodePath():
+		blinky = get_node(blinky_path)
 
 func _physics_process(_delta):
-	if pacman == null or moving:
+	if pacman == null or blinky == null or moving:
 		return
 
-	# Predict Pacman's position a few tiles ahead
+	# Step 1: get position a few tiles in front of Pacman
 	var pac_dir := Vector2.ZERO
 	if "current_dir" in pacman:
 		pac_dir = pacman.current_dir
-	var target_pos := pacman.global_position + pac_dir * ambush_distance * tile_size
+	var ahead_pos := pacman.global_position + pac_dir * ahead_distance * tile_size
 
+	# Step 2: vector from Blinky to that position
+	var vec_from_blinky := ahead_pos - blinky.global_position
+
+	# Step 3: double it to get Inky’s target
+	var target_pos := blinky.global_position + vec_from_blinky * 2.0
+
+	# Step 4: move toward that target
 	var diff := target_pos - global_position
 
 	# Prefer horizontal or vertical movement depending on larger distance
@@ -39,7 +51,7 @@ func _physics_process(_delta):
 	else:
 		preferred_dirs = [Vector2(0, sign(diff.y)), Vector2(sign(diff.x), 0)]
 
-	# Try each preferred direction first, then fall back to others if blocked
+	# Try preferred directions first, then fallback
 	var tried_dirs := preferred_dirs + directions
 	for dir in tried_dirs:
 		if _can_move(dir):
@@ -61,7 +73,7 @@ func _move_in_direction(dir: Vector2) -> void:
 	await tween.finished
 	moving = false
 
-func _update_sprite_direction(): 
+func _update_sprite_direction():
 	match current_dir: 
 		Vector2.RIGHT: 
 			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Right.png') 

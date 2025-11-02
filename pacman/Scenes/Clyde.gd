@@ -3,7 +3,7 @@ extends Area2D
 @export var tile_size := 24
 @export var animation_speed := 24
 @export var pacman_path: NodePath
-@export var ambush_distance := 4  # tiles ahead of Pacman
+@export var scatter_distance := 5.0  # in tiles
 
 var moving := false
 var current_dir := Vector2.ZERO
@@ -24,11 +24,15 @@ func _physics_process(_delta):
 	if pacman == null or moving:
 		return
 
-	# Predict Pacman's position a few tiles ahead
-	var pac_dir := Vector2.ZERO
-	if "current_dir" in pacman:
-		pac_dir = pacman.current_dir
-	var target_pos := pacman.global_position + pac_dir * ambush_distance * tile_size
+	var distance_to_pac := global_position.distance_to(pacman.global_position)
+
+	var target_pos: Vector2
+	if distance_to_pac > scatter_distance * tile_size:
+		# Far from Pacman: chase him like Blinky
+		target_pos = pacman.global_position
+	else:
+		# Close to Pacman: scatter toward top-left corner
+		target_pos = Vector2.ZERO
 
 	var diff := target_pos - global_position
 

@@ -3,7 +3,6 @@ extends Area2D
 @export var tile_size := 24
 @export var animation_speed := 24
 @export var pacman_path: NodePath
-@export var ambush_distance := 4  # tiles ahead of Pacman
 
 var moving := false
 var current_dir := Vector2.ZERO
@@ -24,13 +23,8 @@ func _physics_process(_delta):
 	if pacman == null or moving:
 		return
 
-	# Predict Pacman's position a few tiles ahead
-	var pac_dir := Vector2.ZERO
-	if "current_dir" in pacman:
-		pac_dir = pacman.current_dir
-	var target_pos := pacman.global_position + pac_dir * ambush_distance * tile_size
-
-	var diff := target_pos - global_position
+	# Calculate vector toward Pacman
+	var diff := pacman.global_position - global_position
 
 	# Prefer horizontal or vertical movement depending on larger distance
 	var preferred_dirs := []
