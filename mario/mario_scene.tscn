@@ -544,6 +544,8 @@ target_position = Vector2(0, 30)
 [connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="killed_goomba" from="Player" to="Goomba5" method="_on_player_killed_goomba"]
+[connection signal="killed_goomba" from="Player" to="Goomba3" method="_on_player_killed_goomba"]
+[connection signal="killed_goomba" from="Player" to="Goomba2" method="_on_player_killed_goomba"]
 [connection signal="player_died" from="Goomba5" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba5" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba3" to="Player" method="_on_mario_player_died"]
