@@ -325,7 +325,13 @@ func _process(_delta):
 		
 		
 
+var dead = false
+
 func _physics_process(delta):
+	
+	if dead:
+		return
+	
 	if !dset:
 		gdelta = delta
 		dset = true
@@ -675,3 +681,9 @@ func _endGroundPound():
 
 func _placeHolder():
 	print("")
+
+
+func _on_mario_player_died() -> void:
+	dead = true
+	position.y -= 50
+	rotate(0.5)

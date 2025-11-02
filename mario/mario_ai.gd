@@ -341,6 +341,7 @@ var run_hold = true
 func isNearLedge(right):
 	const LEDGE_DISTANCE = 75.0
 	const LEDGE_HEIGHT = 300.0
+	
 	if right:
 		var ray_start = transform.get_origin() + Vector2(LEDGE_DISTANCE, 0)
 		var ray_end = ray_start + Vector2(0, -LEDGE_HEIGHT)
@@ -352,8 +353,10 @@ func isNearLedge(right):
 		var ray = get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(ray_start, ray_end))
 		return ray.is_empty();
 
+signal player_died
+
 func doAI():
-	const MIN_DISTANCE = 10
+	const MIN_DISTANCE = 50
 	left_hold = false
 	right_hold = false
 	up_hold = false
@@ -367,10 +370,12 @@ func doAI():
 	var delta = Target.position.x - position.x;
 	if (delta > MIN_DISTANCE):
 		right_hold = true
-		jump_tap = isNearLedge(true)
+		jump_tap = !isNearLedge(true)
 	elif (delta < -MIN_DISTANCE):
 		left_hold = true
-		jump_tap = isNearLedge(false)
+		jump_tap = !isNearLedge(false)
+	else:
+		emit_signal("player_died")
 
 func _physics_process(delta):
 	if !dset:

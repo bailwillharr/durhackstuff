@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=28 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://djkp8wcxeohs0" path="res://gardino/Assets/dino/dino_walking_0.png" id="7_8jl8k"]
 [ext_resource type="Texture2D" uid="uid://cflustvshixvy" path="res://gardino/Assets/dino/dino_walking_1.png" id="8_hdsne"]
 [ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="9_5tlg1"]
+[ext_resource type="Texture2D" uid="uid://trv5qhpuaecp" path="res://mario/images/deathtext.png" id="13_8s81v"]
+[ext_resource type="Script" uid="uid://dy051krj6q70h" path="res://mario/death_screen.gd" id="14_8jl8k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hwuu"]
 atlas = ExtResource("1_jmjmq")
@@ -187,7 +189,7 @@ shader_parameter/lines_velocity = 30.0
 script = ExtResource("1_g6g74")
 
 [node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider", "Target")]
-position = Vector2(706, 516)
+position = Vector2(192, 512)
 script = ExtResource("2_ntyfw")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
@@ -212,7 +214,7 @@ position = Vector2(-0.25, -3.25)
 shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
-position = Vector2(361, 440)
+position = Vector2(768, 448)
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
@@ -229,6 +231,7 @@ walk = true
 position = Vector2(7, -7)
 zoom = Vector2(0.595, 0.595)
 position_smoothing_enabled = true
+position_smoothing_speed = 20.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
@@ -243,7 +246,7 @@ position = Vector2(51, 54.5)
 shape = SubResource("RectangleShape2D_fx5ej")
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(512, 608)
+position = Vector2(512, 640)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
@@ -254,7 +257,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(-448, 800)
+position = Vector2(1536, 768)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor2"]
@@ -265,7 +268,7 @@ position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor3" type="StaticBody2D" parent="."]
-position = Vector2(-512, 416)
+position = Vector2(2432, 576)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor3"]
@@ -276,7 +279,7 @@ position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
 [node name="Floor4" type="StaticBody2D" parent="."]
-position = Vector2(-640, 160)
+position = Vector2(3456, 768)
 scale = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor4"]
@@ -296,4 +299,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CanvasLayer3" type="CanvasLayer" parent="CanvasLayer"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CanvasLayer3"]
+visible = false
+position = Vector2(768, 320)
+scale = Vector2(3, 3)
+texture = ExtResource("13_8s81v")
+script = ExtResource("14_8jl8k")
+
 [connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
+[connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
+[connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/Sprite2D" method="_on_mario_player_died"]
