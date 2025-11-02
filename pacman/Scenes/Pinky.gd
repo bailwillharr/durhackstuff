@@ -2,13 +2,16 @@ extends Area2D
 
 @export var tile_size := 24
 @export var animation_speed := 5        # sprite animation speed
-@export var speed := 50               # pixels per second
+@export var speed := 100               # pixels per second
 @export var pacman_path: NodePath
+@export var player_path: NodePath       # ☠️ new — for when Pac-Man dies!
 @export var ambush_distance := 4        # tiles ahead of Pacman
 
 var moving := false
 var current_dir := Vector2.ZERO
 var pacman: Node2D = null
+var player: Node2D = null
+var chasing_player := false
 var directions := [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 
 @onready var ray := $RayCast2D
@@ -20,17 +23,14 @@ func _ready():
 	position = position.snapped(Vector2.ONE * (tile_size / 2))
 	if pacman_path != NodePath():
 		pacman = get_node(pacman_path)
+	if player_path != NodePath():
+		player = get_node(player_path)
 
 func _physics_process(_delta):
-	if pacman == null or moving:
+	if moving or pacman == null:
 		return
 
-	# Predict Pacman's position a few tiles ahead
-	var pac_dir := Vector2.ZERO
-	if "current_dir" in pacman:
-		pac_dir = pacman.current_dir
-	var target_pos := pacman.global_position + pac_dir * ambush_distance * tile_size
-
+	var target_pos := _get_target_position()
 	var diff := target_pos - global_position
 
 	# Prefer horizontal or vertical movement depending on larger distance
@@ -40,7 +40,6 @@ func _physics_process(_delta):
 	else:
 		preferred_dirs = [Vector2(0, sign(diff.y)), Vector2(sign(diff.x), 0)]
 
-	# Try each preferred direction first, then fall back to others if blocked
 	var tried_dirs := preferred_dirs + directions
 	for dir in tried_dirs:
 		if _can_move(dir):
@@ -48,6 +47,17 @@ func _physics_process(_delta):
 			_update_sprite_direction()
 			_move_in_direction(dir)
 			break
+
+func _get_target_position() -> Vector2:
+	if chasing_player and player != null:
+		# ☠️ Chase the player directly when Pac-Man’s dead
+		return player.global_position
+
+	# ⚓ Normal Pinky ambush logic
+	var pac_dir := Vector2.ZERO
+	if "current_dir" in pacman:
+		pac_dir = pacman.current_dir
+	return pacman.global_position + pac_dir * ambush_distance * tile_size
 
 func _can_move(dir: Vector2) -> bool:
 	ray.target_position = dir * tile_size * 0.7
@@ -74,4 +84,12 @@ func _update_sprite_direction():
 		Vector2.UP: 
 			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Up.png') 
 		Vector2.DOWN: 
-			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Down.png')
+			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Down.png') 
+
+# ☠️ When Pac-Man dies, call this from yer Pac-Man script!
+func on_pacman_dead():
+	if player == null or chasing_player:
+		return
+	chasing_player = true
+	await get_tree().create_timer(10.0).timeout
+	chasing_player = false

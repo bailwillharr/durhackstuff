@@ -4,7 +4,7 @@ extends Area2D
 @export var animation_speed := 1
 @export var player_path: NodePath
 
-var speed = 100
+var speed = 140
 
 var moving := false
 var current_dir := Vector2.ZERO
@@ -91,6 +91,9 @@ func die() -> void:
 	sprite.show()
 	sprite.play("default")
 	dead = false
+
+	for ghost in get_tree().get_nodes_in_group("ghost"):
+		ghost.on_pacman_dead()
 
 func _update_rotation():
 	match current_dir:

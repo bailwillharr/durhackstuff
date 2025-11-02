@@ -420,6 +420,7 @@ collision_layer = 3
 collision_mask = 131
 script = ExtResource("17_6jyvm")
 pacman_path = NodePath("../Pacman")
+player_path = NodePath("../Player")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Blinky"]
 modulate = Color(1, 0, 0, 1)
@@ -443,6 +444,7 @@ collision_layer = 3
 collision_mask = 131
 script = ExtResource("21_6ljie")
 pacman_path = NodePath("../Pacman")
+player_path = NodePath("../Player")
 
 [node name="RayCast2D" type="RayCast2D" parent="Clyde"]
 collision_mask = 129
@@ -466,6 +468,7 @@ collision_layer = 3
 collision_mask = 131
 script = ExtResource("11_tx8xj")
 pacman_path = NodePath("../Pacman")
+player_path = NodePath("../Player")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pinky"]
 modulate = Color(1, 0.019607844, 1, 1)
@@ -490,6 +493,7 @@ collision_mask = 131
 script = ExtResource("24_wxy4e")
 pacman_path = NodePath("../Pacman")
 blinky_path = NodePath("../Pinky")
+player_path = NodePath("../Player")
 
 [node name="RayCast2D" type="RayCast2D" parent="Inky"]
 collision_mask = 129
@@ -520,7 +524,7 @@ collision_mask = 131
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_mnybr")
-frame_progress = 0.4305633
+frame_progress = 0.33074972
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 scale = Vector2(0.7, 0.7)

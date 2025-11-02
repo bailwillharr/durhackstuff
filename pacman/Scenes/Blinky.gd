@@ -2,12 +2,16 @@ extends Area2D
 
 @export var tile_size := 24
 @export var animation_speed := 5  # controls sprite animation
-@export var speed := 50           # pixels per second
+@export var speed := 100           # pixels per second
 @export var pacman_path: NodePath
+@export var player_path: NodePath   # 🏴‍☠️ add yer player path here, matey!
 
 var moving := false
 var current_dir := Vector2.ZERO
 var pacman: Node2D = null
+var player: Node2D = null
+var target_node: Node2D = null
+var chasing_player := false
 var directions := [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 
 @onready var ray := $RayCast2D
@@ -17,14 +21,19 @@ func _ready():
 	add_to_group("ghost")
 	sprite.play("default")
 	position = position.snapped(Vector2.ONE * (tile_size / 2))
+	
 	if pacman_path != NodePath():
 		pacman = get_node(pacman_path)
+	if player_path != NodePath():
+		player = get_node(player_path)
+	
+	target_node = pacman  # start by huntin’ Pac-Man, as all good ghosts should! ☠️
 
 func _physics_process(_delta):
-	if pacman == null or moving:
+	if target_node == null or moving:
 		return
 
-	var diff := pacman.global_position - global_position
+	var diff := target_node.global_position - global_position
 
 	# Prefer horizontal or vertical movement depending on larger distance
 	var preferred_dirs := []
@@ -67,4 +76,14 @@ func _update_sprite_direction():
 		Vector2.UP: 
 			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Up.png') 
 		Vector2.DOWN: 
-			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Down.png')
+			$Sprite2D.texture = load('res://pacman/Assets/Ghost/Ghost_Eyes_Down.png') 
+
+# ⚓ When Pac-Man perishes, call this from yer Pac-Man script!
+func on_pacman_dead():
+	if player == null or chasing_player:
+		return
+	chasing_player = true
+	target_node = player
+	await get_tree().create_timer(10.0).timeout
+	chasing_player = false
+	target_node = pacman
