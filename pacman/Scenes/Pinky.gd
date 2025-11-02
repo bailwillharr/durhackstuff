@@ -1,4 +1,4 @@
-## BLINKY
+## INKY
 extends CharacterBody2D
 
 @export var speed: float = 100.0
@@ -16,7 +16,7 @@ func _physics_process(_delta: float) -> void:
 	if pacman == null:
 		return
 
-	var diff: Vector2 = pacman.global_position - global_position
+	var diff: Vector2 = (pacman.global_position + pacman.velocity * 4) - global_position
 
 	# Decide whether to move horizontally or vertically
 	var dir: Vector2 = Vector2.ZERO

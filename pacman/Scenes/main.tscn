@@ -1,13 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=33 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://d35q5eeg8cpnw" path="res://pacman/Scenes/ghost_1.gd" id="2_5ai4u"]
 [ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://pacman/Assets/Ghost/Ghost_Body_01.png" id="3_45enw"]
 [ext_resource type="Texture2D" uid="uid://k486j4lctjb7" path="res://pacman/Assets/Ghost/Ghost_Body_02.png" id="4_jo42j"]
 [ext_resource type="Texture2D" uid="uid://dw3xx2kpcbjrs" path="res://pacman/Assets/Ghost/Ghost_Eyes_Right.png" id="5_gq5fd"]
 [ext_resource type="Script" uid="uid://ce6b3ndg61ul" path="res://pacman/Scenes/pacman_control.gd" id="6_5ai4u"]
+[ext_resource type="Texture2D" uid="uid://bbgj23q7gam4f" path="res://pacman/Assets/Pacman/Pacman_Death_01.png" id="6_vdnwx"]
+[ext_resource type="Texture2D" uid="uid://vxf8adm234y3" path="res://pacman/Assets/Pacman/Pacman_Death_02.png" id="7_6nbyg"]
 [ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://pacman/Assets/Pacman/Pacman_01.png" id="7_wxa58"]
+[ext_resource type="Texture2D" uid="uid://coy4joj7785kn" path="res://pacman/Assets/Pacman/Pacman_Death_03.png" id="8_l4f8j"]
 [ext_resource type="Texture2D" uid="uid://h71ud3s8c8n3" path="res://pacman/Assets/Pacman/Pacman_02.png" id="8_tx8xj"]
+[ext_resource type="Script" uid="uid://c6la6ter2peo2" path="res://pacman/Scenes/inky.gd" id="9_5ai4u"]
 [ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://pacman/Assets/Pacman/Pacman_03.png" id="9_vh3py"]
+[ext_resource type="Texture2D" uid="uid://dc32pr4l0exr7" path="res://pacman/Assets/Pacman/Pacman_Death_04.png" id="9_wxy4e"]
+[ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://pacman/Assets/Pacman/Pacman_Death_05.png" id="10_wrw0n"]
+[ext_resource type="Script" uid="uid://bxv5mecuqjfpb" path="res://pacman/Scenes/clyde.gd" id="10_wxa58"]
+[ext_resource type="Texture2D" uid="uid://bs55ta550rsj3" path="res://pacman/Assets/Pacman/Pacman_Death_06.png" id="11_nm4mk"]
+[ext_resource type="Script" uid="uid://lb0sx1q72rww" path="res://pacman/Scenes/Pinky.gd" id="11_tx8xj"]
+[ext_resource type="Texture2D" uid="uid://c3dh7n3hysm7o" path="res://pacman/Assets/Pacman/Pacman_Death_07.png" id="12_dqo6k"]
+[ext_resource type="Texture2D" uid="uid://d30tk7uppyp8r" path="res://pacman/Assets/Pacman/Pacman_Death_08.png" id="13_8sff4"]
+[ext_resource type="Texture2D" uid="uid://bm2447s8rp6kl" path="res://pacman/Assets/Pacman/Pacman_Death_09.png" id="14_mnybr"]
+[ext_resource type="Texture2D" uid="uid://malqtxrid8h4" path="res://pacman/Assets/Pacman/Pacman_Death_10.png" id="15_gxxxx"]
+[ext_resource type="Texture2D" uid="uid://2xj6ip5thdc6" path="res://pacman/Assets/Pacman/Pacman_Death_11.png" id="16_vuw25"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xf0iy"]
 animations = [{
@@ -29,6 +43,44 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_vdnwx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6nbyg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_l4f8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wxy4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wrw0n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nm4mk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dqo6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8sff4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mnybr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_gxxxx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vuw25")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_wxa58")
 }, {
 "duration": 1.0,
@@ -47,6 +99,54 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rshnp"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_wxa58"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_45enw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jo42j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tx8xj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ai4u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jo42j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_45enw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wxa58"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vh3py"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jo42j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_45enw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jt7cs"]
+
 [node name="Pacman-game" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -55,6 +155,7 @@ zoom = Vector2(0.812, 0.812)
 [node name="Blinky" type="CharacterBody2D" parent="."]
 position = Vector2(-200, 0)
 scale = Vector2(2, 2)
+collision_layer = 3
 script = ExtResource("2_5ai4u")
 pacman_path = NodePath("../pacman")
 
@@ -72,12 +173,71 @@ shape = SubResource("CircleShape2D_5ai4u")
 
 [node name="pacman" type="CharacterBody2D" parent="."]
 scale = Vector2(2, 2)
+collision_mask = 130
 script = ExtResource("6_5ai4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="pacman"]
 sprite_frames = SubResource("SpriteFrames_jt7cs")
-frame_progress = 0.0062802634
+animation = &"death"
+frame_progress = 0.17880088
+speed_scale = 0.75
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pacman"]
 scale = Vector2(0.7, 0.7)
 shape = SubResource("CircleShape2D_rshnp")
+
+[node name="Inky" type="CharacterBody2D" parent="."]
+position = Vector2(-300, 0)
+scale = Vector2(2, 2)
+collision_layer = 3
+script = ExtResource("9_5ai4u")
+pacman_path = NodePath("../pacman")
+blinky_path = NodePath("../Blinky")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Inky"]
+modulate = Color(0, 1, 1, 1)
+sprite_frames = SubResource("SpriteFrames_wxa58")
+
+[node name="Sprite2D" type="Sprite2D" parent="Inky"]
+texture = ExtResource("5_gq5fd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inky"]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_tx8xj")
+
+[node name="Clyde" type="CharacterBody2D" parent="."]
+position = Vector2(-500, 0)
+scale = Vector2(2, 2)
+collision_layer = 3
+script = ExtResource("10_wxa58")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Clyde"]
+modulate = Color(0.87, 0.34800002, 0, 1)
+sprite_frames = SubResource("SpriteFrames_5ai4u")
+
+[node name="Sprite2D" type="Sprite2D" parent="Clyde"]
+texture = ExtResource("5_gq5fd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Clyde"]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_wxa58")
+
+[node name="Pinky" type="CharacterBody2D" parent="."]
+position = Vector2(-400, 0)
+scale = Vector2(2, 2)
+collision_layer = 3
+script = ExtResource("11_tx8xj")
+pacman_path = NodePath("../pacman")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pinky"]
+modulate = Color(1, 0.5176471, 1, 1)
+sprite_frames = SubResource("SpriteFrames_vh3py")
+frame = 1
+frame_progress = 0.54130906
+
+[node name="Sprite2D" type="Sprite2D" parent="Pinky"]
+texture = ExtResource("5_gq5fd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pinky"]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_jt7cs")
