@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=48 format=4 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Texture2D" uid="uid://di7lt8ehvdxdh" path="res://pacman/Assets/Walls/wall_atlas.png" id="1_6a31f"]
 [ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://pacman/Assets/Ghost/Ghost_Body_01.png" id="3_45enw"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="27_8sff4"]
 [ext_resource type="Script" uid="uid://cy3ccgfmxirf8" path="res://pacman/Scenes/pellet_spawner.gd" id="29_8sff4"]
 [ext_resource type="PackedScene" uid="uid://c5l3g76xwltar" path="res://pacman/Scenes/pellet.tscn" id="30_mnybr"]
+[ext_resource type="Shader" path="res://mario/crt2.gdshader" id="31_gxxxx"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_6nbyg"]
 tile_data = PackedInt32Array(0, 458752, 0, 65536, 0, 3, 131072, 0, 3, 196608, 0, 3, 262144, 0, 3, 327680, 458752, 1610612736, 1, 196608, 3, 327681, 131072, 3, 2, 393216, 0, 65538, 65536, 3, 131074, 65536, 3, 196610, 458752, 2, 327682, 131072, 3, 196611, 196608, 3, 327683, 131072, 3, 196612, 196608, 3, 327684, 131072, 3, 196613, 458752, 1342177280, 262149, 65536, 3, 327685, 458752, 805306368)
@@ -381,6 +382,19 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gxxxx"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vuw25"]
+shader = ExtResource("31_gxxxx")
+shader_parameter/screen_width = 640.0
+shader_parameter/screen_height = 480.0
+shader_parameter/BarrelPower = 1.04
+shader_parameter/color_bleeding = 1.0
+shader_parameter/bleeding_range_x = 1.2
+shader_parameter/bleeding_range_y = 1.2
+shader_parameter/lines_distance = 4.0
+shader_parameter/scan_size = 2.0
+shader_parameter/scanline_alpha = 0.9
+shader_parameter/lines_velocity = 30.0
+
 [node name="Pacman-game" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -533,3 +547,13 @@ shape = SubResource("CircleShape2D_gxxxx")
 [node name="PelletSpawner" type="Node" parent="."]
 script = ExtResource("29_8sff4")
 pellet_scene = ExtResource("30_mnybr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_vuw25")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
