@@ -1,10 +1,11 @@
 extends Area2D
 
 @export var tile_size := 24
-@export var animation_speed := 24
+@export var animation_speed := 5        # sprite animation speed
+@export var speed := 50               # pixels/sec
 @export var pacman_path: NodePath
 @export var blinky_path: NodePath
-@export var ahead_distance := 2  # tiles ahead of Pacman for calculation
+@export var ahead_distance := 2         # tiles ahead of Pacman
 
 var moving := false
 var current_dir := Vector2.ZERO
@@ -67,9 +68,12 @@ func _can_move(dir: Vector2) -> bool:
 
 func _move_in_direction(dir: Vector2) -> void:
 	moving = true
+	var move_distance: Vector2 = dir * tile_size
+	var duration: float = move_distance.length() / speed   # pixels/sec
+
 	var tween := create_tween()
 	tween.tween_property(self, "global_position",
-		global_position + dir * tile_size, tile_size / animation_speed).set_trans(Tween.TRANS_LINEAR)
+		global_position + move_distance, duration).set_trans(Tween.TRANS_LINEAR)
 	await tween.finished
 	moving = false
 

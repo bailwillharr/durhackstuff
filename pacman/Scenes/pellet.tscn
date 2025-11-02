@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5l3g76xwltar"]
+
+[ext_resource type="Texture2D" uid="uid://doq0aalcuv5a" path="res://pacman/Assets/Pellet/pellets.png" id="1_7c5yx"]
+[ext_resource type="Script" uid="uid://c50uym5gpydms" path="res://pacman/Scenes/pellet.gd" id="1_a7vds"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vuw25"]
+
+[node name="Pellet" type="Area2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_a7vds")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.2, 0.2)
+shape = SubResource("CircleShape2D_vuw25")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7c5yx")

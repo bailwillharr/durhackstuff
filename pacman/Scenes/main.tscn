@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=46 format=4 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Texture2D" uid="uid://di7lt8ehvdxdh" path="res://pacman/Assets/Walls/wall_atlas.png" id="1_6a31f"]
 [ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://pacman/Assets/Ghost/Ghost_Body_01.png" id="3_45enw"]
@@ -24,6 +24,12 @@
 [ext_resource type="Texture2D" uid="uid://dcgg14tac7mou" path="res://pacman/Assets/Ghost/Ghost_Eyes_Up.png" id="23_6nbyg"]
 [ext_resource type="Script" uid="uid://2pif32ifnmri" path="res://pacman/Scenes/pacman.gd" id="24_l4f8j"]
 [ext_resource type="Script" uid="uid://dvovakdjhqx5n" path="res://pacman/Scenes/Inky.gd" id="24_wxy4e"]
+[ext_resource type="Script" uid="uid://dokfh4tj88e36" path="res://pacman/Scenes/player.gd" id="25_dqo6k"]
+[ext_resource type="Texture2D" uid="uid://djkp8wcxeohs0" path="res://gardino/Assets/dino/dino_walking_0.png" id="25_nm4mk"]
+[ext_resource type="Texture2D" uid="uid://cflustvshixvy" path="res://gardino/Assets/dino/dino_walking_1.png" id="26_dqo6k"]
+[ext_resource type="Texture2D" uid="uid://bimsfgr5gp58v" path="res://gardino/Assets/dino/dino_walking_2.png" id="27_8sff4"]
+[ext_resource type="Script" uid="uid://cy3ccgfmxirf8" path="res://pacman/Scenes/pellet_spawner.gd" id="29_8sff4"]
+[ext_resource type="PackedScene" uid="uid://c5l3g76xwltar" path="res://pacman/Scenes/pellet.tscn" id="30_mnybr"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_6nbyg"]
 tile_data = PackedInt32Array(0, 458752, 0, 65536, 0, 3, 131072, 0, 3, 196608, 0, 3, 262144, 0, 3, 327680, 458752, 1610612736, 1, 196608, 3, 327681, 131072, 3, 2, 393216, 0, 65538, 65536, 3, 131074, 65536, 3, 196610, 458752, 2, 327682, 131072, 3, 196611, 196608, 3, 327683, 131072, 3, 196612, 196608, 3, 327684, 131072, 3, 196613, 458752, 1342177280, 262149, 65536, 3, 327685, 458752, 805306368)
@@ -356,6 +362,25 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nm4mk"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_mnybr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_nm4mk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_dqo6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_8sff4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gxxxx"]
+
 [node name="Pacman-game" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -369,8 +394,10 @@ tile_set = SubResource("TileSet_l4f8j")
 
 [node name="Pacman" type="Area2D" parent="."]
 position = Vector2(-35, 25)
+collision_layer = 3
+collision_mask = 131
 script = ExtResource("24_l4f8j")
-animation_speed = 3.5
+player_path = NodePath("../Player")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pacman"]
 scale = Vector2(1.5, 1.5)
@@ -389,6 +416,8 @@ collision_mask = 129
 
 [node name="Blinky" type="Area2D" parent="."]
 position = Vector2(205, 0)
+collision_layer = 3
+collision_mask = 131
 script = ExtResource("17_6jyvm")
 pacman_path = NodePath("../Pacman")
 
@@ -410,6 +439,8 @@ collision_mask = 129
 
 [node name="Clyde" type="Area2D" parent="."]
 position = Vector2(-250, 0)
+collision_layer = 3
+collision_mask = 131
 script = ExtResource("21_6ljie")
 pacman_path = NodePath("../Pacman")
 
@@ -431,6 +462,8 @@ texture = ExtResource("5_gq5fd")
 
 [node name="Pinky" type="Area2D" parent="."]
 position = Vector2(-250, 25)
+collision_layer = 3
+collision_mask = 131
 script = ExtResource("11_tx8xj")
 pacman_path = NodePath("../Pacman")
 
@@ -452,12 +485,11 @@ collision_mask = 129
 
 [node name="Inky" type="Area2D" parent="."]
 position = Vector2(205, 25)
+collision_layer = 3
+collision_mask = 131
 script = ExtResource("24_wxy4e")
-tile_size = null
-animation_speed = null
 pacman_path = NodePath("../Pacman")
 blinky_path = NodePath("../Pinky")
-ahead_distance = null
 
 [node name="RayCast2D" type="RayCast2D" parent="Inky"]
 collision_mask = 129
@@ -474,3 +506,26 @@ shape = SubResource("CircleShape2D_nm4mk")
 [node name="Sprite2D" type="Sprite2D" parent="Inky"]
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("5_gq5fd")
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(-12, 360)
+collision_layer = 131
+collision_mask = 131
+script = ExtResource("25_dqo6k")
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+position = Vector2(0, 0.667)
+collision_mask = 131
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_mnybr")
+frame_progress = 0.4305633
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_gxxxx")
+
+[node name="PelletSpawner" type="Node" parent="."]
+script = ExtResource("29_8sff4")
+pellet_scene = ExtResource("30_mnybr")

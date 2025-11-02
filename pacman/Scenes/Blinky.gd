@@ -1,7 +1,8 @@
 extends Area2D
 
 @export var tile_size := 24
-@export var animation_speed := 24
+@export var animation_speed := 5  # controls sprite animation
+@export var speed := 50           # pixels per second
 @export var pacman_path: NodePath
 
 var moving := false
@@ -23,7 +24,6 @@ func _physics_process(_delta):
 	if pacman == null or moving:
 		return
 
-	# Calculate vector toward Pacman
 	var diff := pacman.global_position - global_position
 
 	# Prefer horizontal or vertical movement depending on larger distance
@@ -33,7 +33,7 @@ func _physics_process(_delta):
 	else:
 		preferred_dirs = [Vector2(0, sign(diff.y)), Vector2(sign(diff.x), 0)]
 
-	# Try each preferred direction first, then fall back to others if blocked
+	# Try preferred directions first, then fall back to others
 	var tried_dirs := preferred_dirs + directions
 	for dir in tried_dirs:
 		if _can_move(dir):
@@ -49,9 +49,12 @@ func _can_move(dir: Vector2) -> bool:
 
 func _move_in_direction(dir: Vector2) -> void:
 	moving = true
+	var move_distance: Vector2 = dir * tile_size
+	var duration: float = move_distance.length() / speed  # speed in pixels/sec
+
 	var tween := create_tween()
 	tween.tween_property(self, "global_position",
-		global_position + dir * tile_size, tile_size / animation_speed).set_trans(Tween.TRANS_LINEAR)
+		global_position + move_distance, duration).set_trans(Tween.TRANS_LINEAR)
 	await tween.finished
 	moving = false
 
