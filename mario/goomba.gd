@@ -13,7 +13,6 @@ func isNearLedge(right):
 		return !$RayCast2DRight.is_colliding()
 	else:
 		return !$RayCast2DLeft.is_colliding()
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

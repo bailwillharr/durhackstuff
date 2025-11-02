@@ -280,6 +280,7 @@ shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
 position = Vector2(768, 448)
+collision_layer = 3
 script = ExtResource("2_g6g74")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
@@ -313,6 +314,7 @@ shape = SubResource("RectangleShape2D_fx5ej")
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(512, 640)
 scale = Vector2(4, 4)
+collision_layer = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
 texture = SubResource("AtlasTexture_6n16v")
@@ -324,6 +326,7 @@ shape = SubResource("RectangleShape2D_6n16v")
 [node name="Floor2" type="StaticBody2D" parent="."]
 position = Vector2(1536, 768)
 scale = Vector2(4, 4)
+collision_layer = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor2"]
 texture = SubResource("AtlasTexture_6n16v")
@@ -335,6 +338,7 @@ shape = SubResource("RectangleShape2D_6n16v")
 [node name="Floor3" type="StaticBody2D" parent="."]
 position = Vector2(2432, 576)
 scale = Vector2(3.995, 3.995)
+collision_layer = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor3"]
 texture = SubResource("AtlasTexture_6n16v")
@@ -346,6 +350,7 @@ shape = SubResource("RectangleShape2D_6n16v")
 [node name="Floor4" type="StaticBody2D" parent="."]
 position = Vector2(3456, 768)
 scale = Vector2(4, 4)
+collision_layer = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor4"]
 texture = SubResource("AtlasTexture_6n16v")
@@ -376,6 +381,7 @@ script = ExtResource("14_8jl8k")
 [node name="Goomba" type="StaticBody2D" parent="."]
 position = Vector2(1409, 692)
 scale = Vector2(4, 4)
+collision_layer = 2
 script = ExtResource("15_5tlg1")
 Speed = 100
 

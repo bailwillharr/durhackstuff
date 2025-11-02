@@ -371,7 +371,7 @@ func isNearLedge(right):
 signal player_died
 
 func doAI():
-	const MIN_DISTANCE = 50
+	const MIN_DISTANCE = 35
 	left_hold = false
 	right_hold = false
 	up_hold = false

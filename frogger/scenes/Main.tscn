@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cvbu3lrpa2ped"]
 
-[ext_resource type="Script" uid="uid://khtf04kyek82" path="res://scripts/Lane.gd" id="1_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://b6sihnrvg3q6k" path="res://scenes/Player.tscn" id="2_rarhs"]
-[ext_resource type="Script" uid="uid://bmwuoiremwv3y" path="res://scripts/River.gd" id="3_c01mt"]
-[ext_resource type="PackedScene" uid="uid://c53dkcfl4o44c" path="res://scenes/Car.tscn" id="3_vcsgt"]
-[ext_resource type="PackedScene" uid="uid://bx7oa4xnvf8ih" path="res://scenes/Log.tscn" id="4_nxtc6"]
+[ext_resource type="Script" uid="uid://khtf04kyek82" path="res://frogger/scripts/Lane.gd" id="1_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://b6sihnrvg3q6k" path="res://frogger/scenes/Player.tscn" id="2_rarhs"]
+[ext_resource type="Script" uid="uid://bmwuoiremwv3y" path="res://frogger/scripts/River.gd" id="3_c01mt"]
+[ext_resource type="PackedScene" uid="uid://c53dkcfl4o44c" path="res://frogger/scenes/Car.tscn" id="3_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://bx7oa4xnvf8ih" path="res://frogger/scenes/Log.tscn" id="4_nxtc6"]
 
 [node name="Main" type="Node2D"]
 
