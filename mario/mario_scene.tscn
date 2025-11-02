@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bhkvxpqty24h6"]
+[gd_scene load_steps=40 format=3 uid="uid://bhkvxpqty24h6"]
 
 [ext_resource type="Script" uid="uid://by7bncqo1qqc6" path="res://mario/mario_scene.gd" id="1_g6g74"]
 [ext_resource type="Texture2D" uid="uid://dr543dc6jp41r" path="res://mario/images/mario/smb_mario_sheet.png" id="1_jmjmq"]
@@ -40,6 +40,14 @@ region = Rect2(290, 52, 29, 34)
 [sub_resource type="AtlasTexture" id="AtlasTexture_omkag"]
 atlas = ExtResource("1_jmjmq")
 region = Rect2(232, 52, 29, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixms2"]
+atlas = ExtResource("1_jmjmq")
+region = Rect2(180, 52, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34rug"]
+atlas = ExtResource("1_jmjmq")
+region = Rect2(209, 52, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ow0ht"]
 animations = [{
@@ -94,6 +102,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ixms2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34rug")
+}],
+"loop": true,
+"name": &"stunned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_tqwqi")
 }, {
 "duration": 1.0,
@@ -111,7 +130,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l02i7"]
-size = Vector2(66.5, 129.5)
+size = Vector2(50, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mdx8k"]
 animations = [{
@@ -165,7 +184,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fx5ej"]
-size = Vector2(102, 117)
+size = Vector2(86, 117)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6n16v"]
 atlas = ExtResource("4_krxw5")
@@ -260,7 +279,7 @@ script = ExtResource("2_ntyfw")
 PlayerSprite = NodePath("AnimatedSprite2D")
 PlayerCollider = NodePath("CollisionShape2D")
 Target = NodePath("../Player")
-maxSpeed = 450.0
+maxSpeed = 1100.0
 runningModifier = true
 jumpHeight = 3.0
 gravityScale = 40.0
@@ -273,10 +292,11 @@ walk = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mario"]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ow0ht")
-animation = &"idle"
+animation = &"stunned"
+frame_progress = 0.9555531
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mario"]
-position = Vector2(-0.25, -3.25)
+position = Vector2(-3, -4)
 shape = SubResource("RectangleShape2D_l02i7")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
@@ -308,9 +328,10 @@ position = Vector2(50, 49)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_mdx8k")
 animation = &"run"
+frame_progress = 0.16674672
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(51, 54.5)
+position = Vector2(43, 54.5)
 shape = SubResource("RectangleShape2D_fx5ej")
 
 [node name="Floor" type="StaticBody2D" parent="."]
@@ -361,6 +382,42 @@ texture = SubResource("AtlasTexture_6n16v")
 position = Vector2(0, -0.36)
 shape = SubResource("RectangleShape2D_6n16v")
 
+[node name="Floor5" type="StaticBody2D" parent="."]
+position = Vector2(4000, 768)
+scale = Vector2(4, 4)
+collision_layer = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor5"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor5"]
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="Floor6" type="StaticBody2D" parent="."]
+position = Vector2(5027, 1190)
+scale = Vector2(4, 4)
+collision_layer = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor6"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor6"]
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
+[node name="Floor7" type="StaticBody2D" parent="."]
+position = Vector2(6051, 1190)
+scale = Vector2(4, 4)
+collision_layer = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor7"]
+texture = SubResource("AtlasTexture_6n16v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor7"]
+position = Vector2(0, -0.36)
+shape = SubResource("RectangleShape2D_6n16v")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
@@ -381,7 +438,7 @@ texture = ExtResource("13_8s81v")
 script = ExtResource("14_8jl8k")
 
 [node name="Goomba" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
-position = Vector2(1409, 692)
+position = Vector2(1881, 691)
 scale = Vector2(4, 4)
 collision_layer = 2
 script = ExtResource("15_5tlg1")
@@ -390,7 +447,7 @@ Player = NodePath("../Player")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba"]
 sprite_frames = SubResource("SpriteFrames_ixms2")
-animation = &"right"
+animation = &"dying"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba"]
 position = Vector2(0, -0.5)
@@ -405,8 +462,63 @@ collide_with_areas = true
 position = Vector2(-12, 0)
 target_position = Vector2(0, 30)
 
+[node name="Goomba3" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
+position = Vector2(3651, 692)
+scale = Vector2(4, 4)
+collision_layer = 2
+script = ExtResource("15_5tlg1")
+Speed = 100
+Player = NodePath("../Player")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba3"]
+sprite_frames = SubResource("SpriteFrames_ixms2")
+animation = &"dying"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba3"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_34rug")
+
+[node name="RayCast2DRight" type="RayCast2D" parent="Goomba3"]
+position = Vector2(12, 0)
+target_position = Vector2(0, 30)
+collide_with_areas = true
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba3"]
+position = Vector2(-12, 0)
+target_position = Vector2(0, 30)
+
+[node name="Goomba2" type="StaticBody2D" parent="." node_paths=PackedStringArray("Player")]
+position = Vector2(2667, 499)
+scale = Vector2(4, 4)
+collision_layer = 2
+script = ExtResource("15_5tlg1")
+Speed = 100
+Player = NodePath("../Player")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goomba2"]
+sprite_frames = SubResource("SpriteFrames_ixms2")
+animation = &"dying"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba2"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_34rug")
+
+[node name="RayCast2DRight" type="RayCast2D" parent="Goomba2"]
+position = Vector2(12, 0)
+target_position = Vector2(0, 30)
+collide_with_areas = true
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="Goomba2"]
+position = Vector2(-12, 0)
+target_position = Vector2(0, 30)
+
 [connection signal="draw" from="Mario" to="Mario" method="_on_draw"]
 [connection signal="player_died" from="Mario" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Mario" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="killed_goomba" from="Player" to="Goomba" method="_on_player_killed_goomba"]
 [connection signal="player_died" from="Goomba" to="Player" method="_on_mario_player_died"]
 [connection signal="player_died" from="Goomba" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba3" to="Player" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba3" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba2" to="Player" method="_on_mario_player_died"]
+[connection signal="player_died" from="Goomba2" to="CanvasLayer/CanvasLayer3/deathmsg" method="_on_mario_player_died"]

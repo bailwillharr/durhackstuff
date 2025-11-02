@@ -18,7 +18,7 @@ class_name marioAI
 #INFO HORIZONTAL MOVEMENT 
 @export_category("L/R Movement")
 ##The max speed your player will move
-@export_range(50, 500) var maxSpeed: float = 200.0
+@export_range(50, 2000) var maxSpeed: float = 200.0
 ##How fast your player will reach max speed from rest (in seconds)
 @export_range(0, 4) var timeToReachMaxSpeed: float = 0.2
 ##How fast your player will reach zero speed from max speed (in seconds)
@@ -183,6 +183,21 @@ var rollTap
 var downTap
 var twirlTap
 
+
+var left_hold = false
+var right_hold = false
+var up_hold = false
+var left_tap = false
+var right_tap = false
+var left_release = false
+var right_release = false
+var jump_tap = false
+var jump_release = false
+var run_hold = true
+
+var stunned = 0 # up to 1.0 seconds
+
+
 func _ready():
 	
 	wasMovingR = true
@@ -257,6 +272,7 @@ func _updateData():
 func _process(_delta):
 	#INFO animations
 	#directions
+	
 	if is_on_wall() and !is_on_floor() and latch and wallLatching and ((wallLatchingModifer and latchHold) or !wallLatchingModifer):
 		latched = true
 	else:
@@ -324,19 +340,31 @@ func _process(_delta):
 			anim.speed_scale = 1
 			anim.play("roll")
 		
-		
-		
+	if stunned > 0.0:
+		anim.speed_scale = 5
+		anim.play("stunned")
 
-var left_hold = false
-var right_hold = false
-var up_hold = false
-var left_tap = false
-var right_tap = false
-var left_release = false
-var right_release = false
-var jump_tap = false
-var jump_release = false
-var run_hold = true
+func isNearGoomba(right):
+	const GOOMBA_DISTANCE = 100.0
+	
+	if right:
+		var ray_start = transform.get_origin() + Vector2(20, 0)
+		var ray_end = ray_start + Vector2(GOOMBA_DISTANCE, 0)
+		var ray = get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(ray_start, ray_end))
+		if !ray.is_empty():
+			if ray["collider"].name.find("Goomba") != -1:
+				var goomba = ray["collider"] as StaticBody2D
+				if goomba:
+					if goomba.goomba_dead:
+						stunned = 1.0
+						goomba.queue_free()
+					
+		return !ray.is_empty();
+	else:
+		var ray_start = transform.get_origin() + Vector2(20, 0)
+		var ray_end = ray_start + Vector2(-GOOMBA_DISTANCE, 0)
+		var ray = get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(ray_start, ray_end))
+		return !ray.is_empty();
 
 func isNearPlatform(right):
 	const LEDGE_DISTANCE = 75.0
@@ -372,7 +400,31 @@ signal player_died
 
 func doAI():
 	const MIN_DISTANCE = 35
-	left_hold = false
+	var delta = Target.position.x - position.x;
+	if (delta > MIN_DISTANCE):
+		right_hold = true
+		jump_tap = !isNearPlatform(true)
+		if !jump_tap:
+			jump_tap = isNearLedge(true)
+		if !jump_tap:
+			jump_tap = isNearGoomba(true)
+	elif (delta < -MIN_DISTANCE):
+		left_hold = true
+		jump_tap = !isNearPlatform(false)
+		if !jump_tap:
+			jump_tap = isNearLedge(true)
+		if !jump_tap:
+			jump_tap = isNearGoomba(false)
+	else:
+		emit_signal("player_died")
+
+func _physics_process(delta):
+	
+	if !dset:
+		gdelta = delta
+		dset = true
+	
+		left_hold = false
 	right_hold = false
 	up_hold = false
 	left_tap = false
@@ -382,26 +434,11 @@ func doAI():
 	jump_tap = false
 	jump_release = false
 	run_hold = false
-	var delta = Target.position.x - position.x;
-	if (delta > MIN_DISTANCE):
-		right_hold = true
-		jump_tap = !isNearPlatform(true)
-		if !jump_tap:
-			jump_tap = isNearLedge(true)
-	elif (delta < -MIN_DISTANCE):
-		left_hold = true
-		jump_tap = !isNearPlatform(false)
-		if !jump_tap:
-			jump_tap = isNearLedge(true)
-	else:
-		emit_signal("player_died")
-
-func _physics_process(delta):
-	if !dset:
-		gdelta = delta
-		dset = true
 	
-	doAI();
+	if stunned <= 0.0:
+		doAI();
+	else:
+		stunned -= delta
 		
 	#INFO Input Detectio. Define your inputs from the project settings here.
 	leftHold = left_hold

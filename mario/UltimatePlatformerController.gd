@@ -327,6 +327,8 @@ func _process(_delta):
 
 var dead = false
 
+signal killed_goomba(goomba_obj)
+
 func _physics_process(delta):
 	
 	if dead:
@@ -353,6 +355,14 @@ func _physics_process(delta):
 	downTap = Input.is_action_just_pressed("down")
 	twirlTap = Input.is_action_just_pressed("twirl")
 	
+	if velocity.y > 40:
+		for i in 5:
+			var rayq = PhysicsRayQueryParameters2D.create(transform.get_origin() + Vector2(i * 10 - 25, 0), transform.get_origin() + Vector2(i * 10 - 25, 160))
+			var cast = get_world_2d().direct_space_state.intersect_ray(rayq)
+			if !cast.is_empty():
+				if cast["collider"].name.find("Goomba") != -1:
+					emit_signal("killed_goomba", cast["collider"])
+					break
 	
 	#INFO Left and Right Movement
 	
