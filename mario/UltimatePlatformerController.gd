@@ -12,6 +12,7 @@ class_name PlatformerController2D
 @export_category("Necesary Child Nodes")
 @export var PlayerSprite: AnimatedSprite2D
 @export var PlayerCollider: CollisionShape2D
+@export var WinText: Sprite2D
 
 #INFO HORIZONTAL MOVEMENT 
 @export_category("L/R Movement")
@@ -357,41 +358,41 @@ func _physics_process(delta):
 	
 	if velocity.y > 40:
 		for i in 1:
-			if $RayCast2D.is_colliding():
+			if $RayCast2D.get_collider():
 				#print($RayCast2D.get_collider().name)
 				if $RayCast2D.get_collider().name.find("Goomba") != -1:
 					emit_signal("killed_goomba", $RayCast2D.get_collider())
 					break
-			if $RayCast2D2.is_colliding():
+			if $RayCast2D2.get_collider():
 				#print($RayCast2D2.get_collider().name)
 				if $RayCast2D2.get_collider().name.find("Goomba") != -1:
 					emit_signal("killed_goomba", $RayCast2D2.get_collider())
 					break
-			if $RayCast2D3.is_colliding():
+			if $RayCast2D3.get_collider():
 				#print($RayCast2D3.get_collider().name)
 				if $RayCast2D3.get_collider().name.find("Goomba") != -1:
 					#print(3)
 					emit_signal("killed_goomba", $RayCast2D3.get_collider())
 					break
-			if $RayCast2D4.is_colliding():
+			if $RayCast2D4.get_collider():
 				#print($RayCast2D4.get_collider().name)
 				if $RayCast2D4.get_collider().name.find("Goomba") != -1:
 					#print(4)
 					emit_signal("killed_goomba", $RayCast2D4.get_collider())
 					break
-			if $RayCast2D5.is_colliding():
+			if $RayCast2D5.get_collider():
 				#print($RayCast2D5.get_collider().name)
 				if $RayCast2D5.get_collider().name.find("Goomba") != -1:
 					#print(5)
 					emit_signal("killed_goomba", $RayCast2D5.get_collider())
 					break
-			if $RayCast2D6.is_colliding():
+			if $RayCast2D6.get_collider():
 				#print($RayCast2D6.get_collider().name)
 				if $RayCast2D6.get_collider().name.find("Goomba") != -1:
 					#print(6)
 					emit_signal("killed_goomba", $RayCast2D6.get_collider())
 					break
-			if $RayCast2D7.is_colliding():
+			if $RayCast2D7.get_collider():
 				#print($RayCast2D7.get_collider().name)
 				if $RayCast2D7.get_collider().name.find("Goomba") != -1:
 					#print(7)
@@ -731,3 +732,9 @@ func _on_mario_player_died() -> void:
 	dead = true
 	position.y -= 50
 	rotate(0.5)
+
+signal win_signal
+
+func _on_win_castle_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		emit_signal("win_signal")
